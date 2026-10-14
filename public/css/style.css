@@ -178,7 +178,7 @@ a.doc:hover{border-color:var(--pink)}
 
 /* intro: text vlevo, video vpravo plynule přechází */
 .intro{position:relative;background:var(--ink);color:#fff;overflow:hidden;min-height:min(86vh,760px);display:flex;align-items:center}
-.intro__media{position:absolute;top:0;right:0;bottom:0;width:80%;background:url(../img/foto-4.jpg) center/cover;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 55%);mask-image:linear-gradient(90deg,transparent 0,#000 55%)}
+.intro__media{position:absolute;top:0;right:0;bottom:0;width:80%;background:url(../img/intro-poster.jpg) center/cover;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 55%);mask-image:linear-gradient(90deg,transparent 0,#000 55%)}
 .intro__media::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(11,16,32,.92) 0,rgba(11,16,32,.78) 38%,rgba(11,16,32,.25) 70%,rgba(11,16,32,.1))}
 .intro__video{position:absolute;inset:0;opacity:0;transition:opacity 1.2s;pointer-events:none;background:#000}
 .intro__video.is-on{opacity:1}

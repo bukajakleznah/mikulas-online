@@ -37,6 +37,32 @@ window.MRO = {
     ["3.–8. 11. 2020", "Premiéra: HOTHESS Mikuláš Rally Online 2020."]
   ],
 
+  // --- média: články přepsané vlastními slovy (nepřebíráme původní znění); další se budou přidávat sem ---
+  media: [
+    {
+      date: "6. 12. 2020",
+      title: "Virtuální Mikulášskou rally ovládl Paulát, absolutním mistrem se stává Zeťák",
+      source: "Rally Sprint Kopná",
+      url: "https://rallysprintkopna.cz/virtualni-mikulasskou-rally-ovladl-paulat-absolutnim-mistrem-se-stava-zetak/",
+      text: [
+        "HOTHESS Mikuláš Rally Online uzavřela první sezonu šampionátu SONAX MMČR v Online Rally. Jelo se v první listopadový týden 2020 ve hře Richard Burns Rally a poprvé v historii hry odpovídala virtuální rally přesně reálné předloze ze Slušovic.",
+        "Celkově vyhrál Štěpán Paulát na Volkswagenu Polo GTI R5 před Dennisem Zeťákem (+2,1 s) a Eduardem Perojem (+3,1 s). Zeťákovo druhé místo stačilo k titulu mistra třídy RC2, ve které si vytvořil náskok už v průběhu sezony.",
+        "Další tituly putovaly k Tommimu Mäkinenovi (RC4) a Dawidu Wieczorkovi (RC3). Jezdci jeli na tratích, které předem neznali – slušovické zkoušky se daly poznat jen při seznamovacích jízdách."
+      ]
+    },
+    {
+      date: "5. 11. 2020",
+      title: "Virtuální šampionát vyvrcholí na Mikulášské rally",
+      source: "AutoSport.CZ",
+      url: "http://www.autosport.cz/zavody/clanek.php?cl=21365&id=1605",
+      text: [
+        "Premiérová sezona SONAX MMČR v Online Rally, nového esportového šampionátu Autoklubu České republiky, směřovala k finále. O poslední body i o celkového mistra se jezdci utkali na HOTHESS Mikuláš Rally Online.",
+        "Předlohou byla slušovická Mikuláš Rally, kterou HOTHESS ve spolupráci s promotérskou skupinou NRC převedla do virtuální reality. Jezdce čekaly tři nové zkoušky – okruh kolem dostihového závodiště, klasická zkouška z Lípy do Slušovic (obě dvakrát) a krátký exhibiční test na závěr.",
+        "Novinkou bylo, že trať si jezdci nemohli předem natrénovat. Poznali ji jen při seznamovacích jízdách, takže rozhodovalo i to, jak dobře se dokáží držet rozpisu. Titul ve třídách R-GT a RC3 už byl rozhodnutý, o zbylých třídách a celkovém vítězi se rozhodlo v neděli 8. listopadu."
+      ]
+    }
+  ],
+
   // --- síň slávy: výsledky se generují z data/raw/<rok>.csv skriptem tools/build_results.py ---
   hall: [
     { year: 2025, img: "img/foto-4.jpg" },

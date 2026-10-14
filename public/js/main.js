@@ -153,6 +153,13 @@
     var b = e.target.closest('[data-results]'); if (b) openResults(b.getAttribute('data-results'));
   });
 
+  // média – články
+  $('#articles').innerHTML = D.media.map(function (m) {
+    return '<article class="art rv"><p class="art__meta">' + esc(m.date) + ' · ' + esc(m.source) + '</p><h4 class="art__t">' + esc(m.title) + '</h4>' +
+      m.text.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
+      '<p class="art__src">Zdroj: <a href="' + esc(m.url) + '" target="_blank" rel="noopener">' + esc(m.source) + '</a> (shrnutí vlastními slovy)</p></article>';
+  }).join('');
+
   // YouTube – načte se až po kliknutí (rychlost + soukromí)
   $$('[data-yt]').forEach(function (el) {
     var id = el.getAttribute('data-yt');

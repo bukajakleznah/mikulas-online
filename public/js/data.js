@@ -30,17 +30,20 @@ window.MRO = {
 
   // --- historie / timeline z roku 2020 ---
   timeline: [
-    ["19. 4. 2020", "Start projektu. Dostihovka vzniká ve spolupráci s Myrou43, RZ Zádveřice se upravuje na podobu Mikuláše s Mirou Kurkem."],
-    ["22. 4.", "Stavba areálu firmy Fagus u startu RZ."],
-    ["27. 4.", "Trasa dostihové dráhy je nahrubo hotová."],
-    ["5. 5.", "Terén je v podstatě hotový, fyzika zatím provizorní."],
-    ["7. 5.", "První test RZ Fagus."],
-    ["11. 5.", "Dokončen areál Fagus, RZ Fagus je téměř hotová."],
-    ["26. 5.", "První objekty na Dostihovce: terén 90 %, objekty 30 %, textury 50 %."],
-    ["25. 8.", "Práce se obnovují. RZ Dostihovka padá při dojetí do cíle."],
-    ["11. 10.", "Progres kolem 80 %. Zbývají budovy, lesík, blátivost trati a stíny."],
-    ["16. 10.", "Problém s pádáním vyřešen, projekt byl založen znovu ve Wallaby."],
-    ["Prosinec 2020", "Premiéra: HOTHESS Mikuláš Rally Online 2020."]
+    ["19. 4. 2020", "Začátek projektu. Domluvená tvorba RZ Dostihovka s Myrou43 a úprava RZ Zádveřice do podoby Mikuláše s Mirou Kurkem."],
+    ["22. 4.", "Stavba areálu firmy Fagus na startu rychlostní zkoušky."],
+    ["27. 4.", "Trasa dostihové dráhy je nahrubo hotová. Výstup ze Zaxxona se nedal moc použít, a tak je to hodně o ruční práci."],
+    ["5. 5.", "Terén je v podstatě hotový, začíná se s budovami. Fyzika je provizorní."],
+    ["7.–8. 5.", "První test RZ Fagus, návštěva dostihovky a focení objektů."],
+    ["11. 5.", "Dokončen areál Fagus, RZ Fagus téměř hotová. Práce přerušeny kvůli RZ Komárov."],
+    ["26. 5.", "První objekty na Dostihovce: terén 90 %, objekty 30 %, textury 50 %, integrace 30 %."],
+    ["25. 8.", "Obnovení prací. Fagus dokončen i se zimními texturami, Dostihovka ale padá při dojetí do cíle."],
+    ["4.–11. 10.", "Obrubníky, retardéry, pneumatiky a další objekty. Progres kolem 80 %, stále se řeší padání."],
+    ["16. 10.", "Padání vyřešeno. Projekt se musel ve Wallaby založit celý znovu, ale námaha se vyplatila."],
+    ["23.–25. 10.", "Finální beta verze, anti-zkracovací pastičky, betatest V2."],
+    ["27.–29. 10.", "Dostihovka poprvé na mokru, časoměřiči měří, TV kamery a první sníh. Dokončena Dostihovka i final stage."],
+    ["30. 10.", "Projekt dokončen a všechny tři erzety nahrány na plugin."],
+    ["3.–8. 11. 2020", "Premiéra: HOTHESS Mikuláš Rally Online 2020."]
   ],
 
   // --- síň slávy (TODO: doplnit vítěze a odkazy na výsledky) ---

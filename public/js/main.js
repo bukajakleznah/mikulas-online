@@ -69,4 +69,56 @@
     }, { threshold: .12 });
     $$('.rv').forEach(function (e) { io.observe(e); });
   } else { $$('.rv').forEach(function (e) { e.classList.add('is-in'); }); }
+
+  // --- intro video: samo se spustí (bez zvuku), jakmile se přiblíží do obrazu ---
+  var hv = $('#heroVideo'), snd = $('#heroSound');
+  var saveData = navigator.connection && navigator.connection.saveData;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (hv && !saveData && !reduce) {
+    var vid = hv.getAttribute('data-hero');
+    var fr = document.createElement('iframe');
+    fr.src = 'https://www.youtube-nocookie.com/embed/' + vid + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + vid +
+      '&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
+    fr.allow = 'autoplay; encrypted-media'; fr.tabIndex = -1; fr.title = 'Intro';
+    var cmd = function (f, a) { try { fr.contentWindow.postMessage(JSON.stringify({ event: 'command', func: f, args: a || [] }), '*'); } catch (e) {} };
+    window.addEventListener('message', function (e) {
+      if (e.source !== fr.contentWindow) return;
+      var d; try { d = JSON.parse(e.data); } catch (x) { return; }
+      var st = d && d.info && typeof d.info === 'object' ? d.info.playerState : (d && d.event === 'onStateChange' ? d.info : undefined);
+      if (st === 1 && !hv.classList.contains('is-on')) { hv.classList.add('is-on'); snd.hidden = false; }
+    });
+    fr.addEventListener('load', function () {
+      try { fr.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), '*'); } catch (e) {}
+      cmd('playVideo');
+    });
+    var started = false;
+    var muted = true;
+    snd.addEventListener('click', function () {
+      muted = !muted; cmd(muted ? 'mute' : 'unMute'); if (!muted) cmd('setVolume', [80]); cmd('playVideo');
+      snd.classList.toggle('is-on', !muted); snd.querySelector('.lbl').textContent = muted ? 'Zapnout zvuk' : 'Vypnout zvuk';
+    });
+    // pauza mimo obrazovku (šetří data i baterii)
+    var start = function () { if (!started) { started = true; hv.appendChild(fr); } };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) {
+        if (en[0].isIntersecting) { start(); cmd('playVideo'); } else if (started) { cmd('pauseVideo'); }
+      }, { threshold: .35, rootMargin: '0px 0px 200px 0px' }).observe(hv.parentNode);
+    } else { start(); }
+  }
+
+  // --- lightbox pro "Reálná podoba" ---
+  var lb;
+  $$('[data-video]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (!lb) {
+        lb = document.createElement('div'); lb.className = 'lb'; lb.innerHTML = '<button class="lb__x" aria-label="Zavřít">×</button><div class="lb__box"></div>';
+        document.body.appendChild(lb);
+        var close = function () { lb.classList.remove('is-open'); lb.querySelector('.lb__box').innerHTML = ''; };
+        lb.addEventListener('click', function (e) { if (e.target === lb || e.target.className === 'lb__x') close(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      }
+      lb.querySelector('.lb__box').innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-video') + '?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="Video"></iframe>';
+      lb.classList.add('is-open');
+    });
+  });
 })();

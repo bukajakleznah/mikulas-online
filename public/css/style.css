@@ -3,7 +3,7 @@
   --text:#1b2236; --muted:#5d6783; --line:#dfe6ee;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
 body{font-family:'Montserrat',system-ui,sans-serif;color:var(--text);background:var(--white);line-height:1.65;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 a{color:inherit}
@@ -11,9 +11,9 @@ a{color:inherit}
 .wrap--narrow{width:min(780px,100% - 40px)}
 
 /* nav */
-.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px clamp(16px,4vw,48px);transition:background .3s,box-shadow .3s}
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:8px clamp(16px,4vw,48px);transition:background .3s,box-shadow .3s}
 .nav.is-solid{background:rgba(11,16,32,.92);backdrop-filter:blur(10px);box-shadow:0 2px 20px rgba(0,0,0,.25)}
-.nav__logo img{height:44px;width:auto}
+.nav__logo img{height:68px;width:auto;display:block}
 .nav__links{display:flex;align-items:center;gap:26px;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#fff}
 .nav__links a{text-decoration:none;opacity:.85}
 .nav__links a:hover{opacity:1}
@@ -150,7 +150,7 @@ a.doc:hover{border-color:var(--pink)}
 /* footer */
 .foot{background:var(--ink);color:#b5c2d6;padding:46px 0}
 .foot__grid{display:flex;align-items:center;gap:36px}
-.foot__logo{height:70px;width:auto}
+.foot__logo{height:110px;width:auto}
 .foot__small{font-size:.8rem;margin-top:6px;opacity:.7}
 
 /* reveal */
@@ -165,7 +165,7 @@ a.doc:hover{border-color:var(--pink)}
   .gallery{grid-template-columns:1fr 1fr}
   .facts__grid{grid-template-columns:1fr 1fr}
   .nav__burger{display:block}
-  .nav__links{position:fixed;inset:64px 0 auto 0;flex-direction:column;align-items:flex-start;gap:0;background:rgba(11,16,32,.97);padding:10px 24px 24px;transform:translateY(-130%);transition:transform .3s}
+  .nav__links{position:fixed;inset:84px 0 auto 0;flex-direction:column;align-items:flex-start;gap:0;background:rgba(11,16,32,.97);padding:10px 24px 24px;transform:translateY(-130%);transition:transform .3s}
   .nav__links.is-open{transform:none}
   .nav__links a{padding:14px 0;width:100%;border-bottom:1px solid rgba(255,255,255,.08)}
   .nav__links .btn{margin-top:14px;text-align:center;width:auto}
@@ -175,3 +175,30 @@ a.doc:hover{border-color:var(--pink)}
   .schedule li,.timeline li{grid-template-columns:1fr;gap:2px}
   .foot__grid{flex-direction:column;align-items:flex-start}
 }
+
+/* intro video */
+.intro{background:var(--ink);color:#fff;padding:clamp(56px,8vw,100px) 0}
+.intro h2{margin-bottom:24px}
+.intro__frame{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000 url(../img/foto-4.jpg) center/cover;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.intro__video{position:absolute;inset:0;opacity:0;transition:opacity 1s;pointer-events:none}
+.intro__video.is-on{opacity:1}
+.intro__video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.intro__sound{position:absolute;right:16px;bottom:16px;z-index:3;display:flex;align-items:center;gap:10px;background:rgba(11,16,32,.7);color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:999px;padding:10px 18px;font:700 .78rem/1 'Montserrat',sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(6px)}
+.intro__sound[hidden]{display:none}
+.intro__sound:hover{background:var(--pink);border-color:var(--pink)}
+.intro__sound .ico{width:18px;height:18px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z'/%3E%3C/svg%3E") center/contain no-repeat}
+
+/* tratě – reálná podoba, mapa */
+.stage__real{margin-top:16px;background:none;border:2px solid var(--ink);color:var(--ink);font:800 .75rem/1 'Montserrat',sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:11px 18px;border-radius:999px;cursor:pointer;transition:.15s}
+.stage__real:hover{background:var(--pink);border-color:var(--pink);color:#fff}
+.map{margin:44px auto 0;max-width:620px;text-align:center}
+.map img{width:100%;border-radius:14px;box-shadow:0 14px 40px rgba(11,16,32,.18);background:#fff}
+.map figcaption{font-size:.85rem;color:var(--muted);margin-top:12px}
+.map a{color:var(--pink);font-weight:700}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(5,8,18,.92);display:none;align-items:center;justify-content:center;padding:20px}
+.lb.is-open{display:flex}
+.lb__box{width:min(1000px,100%);aspect-ratio:16/9}
+.lb__box iframe{width:100%;height:100%;border:0;border-radius:12px}
+.lb__x{position:absolute;top:14px;right:20px;background:none;border:0;color:#fff;font-size:2.4rem;line-height:1;cursor:pointer}

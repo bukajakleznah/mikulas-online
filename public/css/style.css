@@ -45,7 +45,7 @@ a{color:inherit}
 .hero__title span{display:block;color:var(--pink)}
 .hero__title span:nth-child(2){color:#fff}
 .hero__title .hero__online{font-size:.5em;font-weight:800;color:var(--ice);margin-top:.2em;letter-spacing:.2em}
-.hero__lead{max-width:560px;font-size:clamp(1.05rem,2vw,1.35rem);margin:28px 0 34px;color:#e8eef6}
+.hero__lead{max-width:760px;font-size:clamp(1.05rem,2vw,1.35rem);margin:28px 0 34px;color:#e8eef6}
 .hero__lead strong{color:#fff;border-bottom:3px solid var(--pink)}
 .hero__cta{display:flex;flex-wrap:wrap;gap:14px}
 .hero__scroll{position:absolute;bottom:26px;left:50%;width:26px;height:42px;border:2px solid rgba(255,255,255,.6);border-radius:14px;transform:translateX(-50%)}
@@ -339,3 +339,5 @@ a.foot__logo:hover{opacity:1;transform:translateY(-3px)}
 .racex__links a:hover{color:var(--ice)}
 
 .edition__photo img{object-position:38% center}
+
+.nw{white-space:nowrap}

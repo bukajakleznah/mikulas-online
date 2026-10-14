@@ -136,7 +136,8 @@ a.doc:hover{border-color:var(--pink)}
 .card__winner{font-size:.9rem;color:var(--ice)}
 .card__winner b{color:#fff}
 .card__note{font-size:.88rem;color:#a7b3c7}
-.card__link{margin-top:auto;padding-top:8px;font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--pink);text-decoration:none}
+.card__link{margin-top:auto;padding:8px 0 0;background:none;border:0;text-align:left;cursor:pointer;font:800 .8rem/1.2 'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--pink)}
+.card__link:hover{color:#fff}
 .card__link.is-off{color:#6d7a93}
 
 /* videos */
@@ -223,3 +224,46 @@ a.doc:hover{border-color:var(--pink)}
 
 .edition__h{font-size:.8rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:26px 0 12px}
 .edition .docs{margin:0;gap:10px}
+
+/* síň slávy – pódium */
+.podium{list-style:none;display:grid;gap:8px;margin:10px 0 4px}
+.podium li{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;background:rgba(255,255,255,.05);border-radius:10px;padding:8px 12px;min-height:50px}
+.podium__pos{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.85rem;color:#10131f;background:#c9ced8}
+.podium__1 .podium__pos{background:#f5c542}.podium__2 .podium__pos{background:#cfd5df}.podium__3 .podium__pos{background:#d08a4e}
+.podium__who{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+.podium__who b{font-size:.92rem;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.podium__who i{font-style:normal;font-size:.74rem;color:#9fb0c8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.podium__t{font-weight:800;font-size:.85rem;color:var(--ice);font-variant-numeric:tabular-nums}
+.card__stat{font-size:.78rem;color:#8ea0ba;margin:4px 0 2px}
+.card--off{opacity:.65;border-style:dashed;justify-content:center}
+.card__yearsm{font-size:2.2rem;font-weight:900;font-style:italic;color:#fff;line-height:1}
+
+/* kompletní výsledky */
+.rm{position:fixed;inset:0;z-index:120;background:rgba(5,8,18,.88);display:none;padding:clamp(0px,2vw,28px)}
+.rm.is-open{display:flex}
+.rm__panel{margin:auto;width:min(1180px,100%);max-height:100%;height:100%;background:var(--ink2);color:#fff;border-radius:16px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.rm__head{display:flex;align-items:center;gap:16px;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.1);flex-wrap:wrap}
+.rm__head>div{flex:1;min-width:220px}
+.rm__title{font-size:1.2rem;font-style:italic;font-weight:900;text-transform:uppercase}
+.rm__sub{font-size:.8rem;color:#9fb0c8;margin-top:2px}
+.rm__q{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:999px;color:#fff;padding:10px 16px;font:600 .85rem 'Montserrat',sans-serif;min-width:220px}
+.rm__q::placeholder{color:#8ea0ba}
+.rm__x{background:none;border:0;color:#fff;font-size:2rem;line-height:1;cursor:pointer;padding:0 6px}
+.rm__body{overflow:auto;padding:0 22px 22px;flex:1}
+.rm__scroll{overflow-x:auto}
+.rm__t{width:100%;border-collapse:collapse;font-size:.85rem;font-variant-numeric:tabular-nums}
+.rm__t th{position:sticky;top:0;background:var(--ink2);text-align:left;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#8ea0ba;padding:14px 10px 10px;border-bottom:1px solid rgba(255,255,255,.15);white-space:nowrap;z-index:1}
+.rm__t td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.rm__t .n{text-align:right}.rm__t .st{color:#aebdd2}
+.rm__t .pos{font-weight:900;color:#8ea0ba;width:44px}
+.rm__t .car{color:#9fb0c8}
+.rm__t .cc{font-size:.65rem;font-weight:800;letter-spacing:.06em;background:rgba(255,255,255,.12);color:#cfd9e8;border-radius:5px;padding:2px 5px;margin-left:4px}
+.rm__t .tot{font-weight:800;color:#fff}.rm__t .tot small{color:#ff7aa8;font-weight:700}
+.rm__t .gap{color:var(--ice)}
+.rm__t tr.top .pos{color:#10131f}
+.rm__t tr.top1{background:rgba(245,197,66,.1)}.rm__t tr.top2{background:rgba(207,213,223,.08)}.rm__t tr.top3{background:rgba(208,138,78,.1)}
+.rm__t tr.top1 .pos{color:#f5c542}.rm__t tr.top2 .pos{color:#cfd5df}.rm__t tr.top3 .pos{color:#d08a4e}
+.rm__t tr[hidden]{display:none}
+.rm__h{margin:30px 0 8px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
+.rm__t--dnf td{color:#9fb0c8}
+@media (max-width:620px){.rm{padding:0}.rm__panel{border-radius:0}.rm__t .st,.rm__t th.st{display:none}.rm__t .car,.rm__t th.car{display:none}.rm__t td,.rm__t th{padding-inline:5px}.rm__t{font-size:.78rem}.rm__t .who{white-space:normal}.rm__t .cc,.rm__t .tot small{display:none}.rm__t .pos{width:28px}.rm__body{padding:0 12px 18px}}

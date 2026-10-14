@@ -24,15 +24,69 @@
     return '<li class="rv"><b>' + esc(t[0]) + '</b><span>' + esc(t[1]) + '</span></li>';
   }).join('');
 
-  // síň slávy (nejnovější první)
-  $('#hall').innerHTML = D.hall.slice().sort(function (a, b) { return b.year - a.year; }).map(function (h) {
-    return '<article class="card rv"><div class="card__img" style="background-image:url(' + esc(h.img) + ')"><span class="card__year">' + h.year + '</span></div>' +
-      '<div class="card__body"><h3>' + esc(h.title) + '</h3>' +
-      (h.winner ? '<p class="card__winner">Vítěz: <b>' + esc(h.winner) + '</b></p>' : '') +
+  // síň slávy: karty s pódiem + kompletní výsledky v okně
+  var fmtT = function (s) { var m = Math.floor(s / 60), r = s - m * 60; return (m ? m + ':' : '') + (r < 10 && m ? '0' : '') + r.toFixed(2).replace('.', ','); };
+  var fmtG = function (s) { return s ? '+' + fmtT(s) : ''; };
+  var hall = $('#hall');
+  hall.innerHTML = D.hall.map(function (h) {
+    if (h.cancelled) {
+      return '<article class="card card--off rv"><div class="card__body"><span class="card__yearsm">' + h.year + '</span><h3>Mikuláš Rally Online ' + h.year + '</h3><p class="card__note">Tento ročník se bohužel nejel.</p></div></article>';
+    }
+    return '<article class="card rv" data-year="' + h.year + '"><div class="card__img" style="background-image:url(' + esc(h.img) + ')"><span class="card__year">' + h.year + '</span></div>' +
+      '<div class="card__body"><h3>Mikuláš Rally Online ' + h.year + '</h3>' +
       (h.note ? '<p class="card__note">' + esc(h.note) + '</p>' : '') +
-      (h.results ? '<a class="card__link" href="' + esc(h.results) + '" target="_blank" rel="noopener">Výsledky →</a>' : '<span class="card__link is-off">Výsledky doplníme</span>') +
-      '</div></article>';
+      '<ol class="podium" data-podium></ol><p class="card__stat" data-stat></p>' +
+      '<button class="card__link" type="button" data-results="' + h.year + '">Kompletní výsledky →</button></div></article>';
   }).join('');
+
+  var idx = null;
+  fetch('data/results-index.json').then(function (r) { return r.json(); }).then(function (data) {
+    idx = data;
+    $$('.card[data-year]').forEach(function (c) {
+      var x = data[c.getAttribute('data-year')]; if (!x) return;
+      $('[data-podium]', c).innerHTML = x.podium.map(function (p) {
+        return '<li class="podium__' + p.pos + '"><span class="podium__pos">' + p.pos + '</span><span class="podium__who"><b>' + esc(p.name) + '</b><i>' + esc(p.car) + '</i></span><span class="podium__t">' + fmtT(p.total) + '</span></li>';
+      }).join('');
+      $('[data-stat]', c).textContent = x.drivers + ' jezdců · ' + x.finished + ' v cíli';
+    });
+  }).catch(function () {});
+
+  var rm;
+  var openResults = function (year) {
+    if (!rm) {
+      rm = document.createElement('div'); rm.className = 'rm';
+      rm.innerHTML = '<div class="rm__panel" role="dialog" aria-modal="true"><div class="rm__head"><div><h3 class="rm__title"></h3><p class="rm__sub"></p></div>' +
+        '<input class="rm__q" type="search" placeholder="Hledat jezdce nebo vůz…" aria-label="Hledat"><button class="rm__x" aria-label="Zavřít">×</button></div><div class="rm__body"></div></div>';
+      document.body.appendChild(rm);
+      var close = function () { rm.classList.remove('is-open'); document.body.style.overflow = ''; };
+      rm.addEventListener('click', function (e) { if (e.target === rm || e.target.className === 'rm__x') close(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    }
+    $('.rm__title', rm).textContent = 'Mikuláš Rally Online ' + year + ' – výsledky';
+    $('.rm__sub', rm).textContent = 'Načítám…'; $('.rm__body', rm).innerHTML = ''; $('.rm__q', rm).value = '';
+    rm.classList.add('is-open'); document.body.style.overflow = 'hidden';
+    fetch('data/results-' + year + '.json').then(function (r) { return r.json(); }).then(function (R) {
+      $('.rm__sub', rm).textContent = R.drivers + ' jezdců · ' + R.finished + ' v cíli · ' + R.stages.length + ' RZ · časy včetně případných penalizací';
+      var lead = R.fin[0].total;
+      var head = '<tr><th>#</th><th>Jezdec</th><th class="car">Vůz</th>' + R.stages.map(function (s, i) { return '<th class="n st" title="' + esc(s) + '">RZ ' + (i + 1) + '</th>'; }).join('') + '<th class="n">Celkem</th><th class="n">Ztráta</th></tr>';
+      var body = R.fin.map(function (x) {
+        return '<tr class="' + (x.pos <= 3 ? 'top top' + x.pos : '') + '"><td class="pos">' + x.pos + '</td><td class="who"><b>' + esc(x.name) + '</b> <span class="cc">' + esc(x.cc) + '</span></td><td class="car">' + esc(x.car) + '</td>' +
+          x.st.map(function (t) { return '<td class="n st">' + fmtT(t) + '</td>'; }).join('') +
+          '<td class="n tot">' + fmtT(x.total) + (x.pen ? ' <small title="v čase je zahrnuta penalizace">pen. ' + x.pen + ' s</small>' : '') + '</td><td class="n gap">' + fmtG(x.total - lead) + '</td></tr>';
+      }).join('');
+      var dnf = R.dnf.length ? '<h4 class="rm__h">Nedokončili (' + R.dnf.length + ')</h4><table class="rm__t rm__t--dnf"><tbody>' + R.dnf.map(function (x) {
+        return '<tr><td class="who"><b>' + esc(x.name) + '</b> <span class="cc">' + esc(x.cc) + '</span></td><td class="car">' + esc(x.car) + '</td><td class="n">dojeto RZ: ' + x.done + ' / ' + R.stages.length + '</td></tr>';
+      }).join('') + '</tbody></table>' : '';
+      $('.rm__body', rm).innerHTML = '<div class="rm__scroll"><table class="rm__t"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>' + dnf;
+    }).catch(function () { $('.rm__sub', rm).textContent = 'Výsledky se nepodařilo načíst.'; });
+    $('.rm__q', rm).oninput = function () {
+      var q = this.value.trim().toLowerCase();
+      $$('.rm__t tbody tr', rm).forEach(function (tr) { tr.hidden = q && tr.textContent.toLowerCase().indexOf(q) < 0; });
+    };
+  };
+  hall.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-results]'); if (b) openResults(b.getAttribute('data-results'));
+  });
 
   // YouTube – načte se až po kliknutí (rychlost + soukromí)
   $$('[data-yt]').forEach(function (el) {

@@ -37,13 +37,13 @@ window.MRO = {
     ["3.–8. 11. 2020", "Premiéra: HOTHESS Mikuláš Rally Online 2020."]
   ],
 
-  // --- síň slávy (TODO: doplnit vítěze a odkazy na výsledky) ---
+  // --- síň slávy: výsledky se generují z data/raw/<rok>.csv skriptem tools/build_results.py ---
   hall: [
-    { year: 2020, title: "HOTHESS Mikuláš Rally Online 2020", note: "Premiérový ročník – první virtuální rallye na světě ve 100% podobě oproti předloze.", winner: "", results: "", img: "img/foto-2.jpg" },
-    { year: 2021, title: "Mikuláš Rally Online 2021", note: "", winner: "", results: "", img: "img/foto-5.jpg" },
-    { year: 2022, title: "Mikuláš Rally Online 2022", note: "", winner: "", results: "", img: "img/foto-3.jpg" },
-    { year: 2023, title: "Mikuláš Rally Online 2023", note: "", winner: "", results: "", img: "img/foto-6.jpg" },
-    { year: 2024, title: "Mikuláš Rally Online 2024", note: "", winner: "", results: "", img: "img/foto-1.jpg" },
-    { year: 2025, title: "Mikuláš Rally Online 2025", note: "", winner: "", results: "", img: "img/foto-4.jpg" }
+    { year: 2025, img: "img/foto-4.jpg" },
+    { year: 2024, img: "img/foto-1.jpg" },
+    { year: 2023, cancelled: true },
+    { year: 2022, img: "img/foto-3.jpg" },
+    { year: 2021, img: "img/foto-6.jpg" },
+    { year: 2020, img: "img/foto-2.jpg", note: "Premiéra – HOTHESS Mikuláš Rally Online 2020, závěrečný podnik MMČR v Online Rally." }
   ]
 };

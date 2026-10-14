@@ -7,7 +7,7 @@
   // rok + registrace
   $$('[data-year]').forEach(function (e) { e.textContent = D.year; });
   $$('[data-reg]').forEach(function (a) {
-    if (a.getAttribute('href') === '#registrace' && a.closest('.nav, .hero')) { return; }
+    if (a.getAttribute('href') === '#rocnik' && a.closest('.nav, .hero')) { return; }
     a.href = D.registrationUrl; a.target = '_blank'; a.rel = 'noopener';
   });
   var st = $('#edStatus'); st.textContent = D.statusText[D.status]; if (D.status === 'open') st.classList.add('is-open');

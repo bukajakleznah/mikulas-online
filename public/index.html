@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mikuláš Rally Online</title>
+<meta name="description" content="HOTHESS Mikuláš Rally Online – první virtuální závod v Richard Burns Rally vytvořený ve 100% podobě podle reálné předlohy ze Slušovic.">
+<meta property="og:title" content="Mikuláš Rally Online">
+<meta property="og:description" content="První virtuální rallye na světě ve 100% podobě oproti reálné předloze. Richard Burns Rally.">
+<meta property="og:image" content="img/foto-1.jpg">
+<link rel="icon" href="img/mikulas_logo_cerne.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,800;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="nav__logo" href="#top" aria-label="Mikuláš Rally Online"><img src="img/mikulas_logo_bile.svg" alt="Mikuláš Rally Online"></a>
+  <button class="nav__burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+  <nav class="nav__links" id="links">
+    <a href="#rocnik">Ročník <span data-year></span></a>
+    <a href="#harmonogram">Harmonogram</a>
+    <a href="#vznik">Jak to vzniklo</a>
+    <a href="#sin-slavy">Síň slávy</a>
+    <a href="#reportaze">Reportáže</a>
+    <a class="btn btn--sm" href="#registrace" data-reg>Registrace</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__bg" style="background-image:url(img/foto-1.jpg)"></div>
+  <div class="hero__shade"></div>
+  <div class="hero__inner">
+    <p class="eyebrow">Richard Burns Rally · Slušovice</p>
+    <h1 class="hero__title"><span>Mikuláš</span><span>Rally</span><span class="hero__online">Online</span></h1>
+    <p class="hero__lead">První virtuální závod na světě vytvořený <strong>ve 100% podobě</strong> oproti reálné předloze.</p>
+    <div class="hero__cta">
+      <a class="btn" href="#registrace" data-reg>Registrace do ročníku <span data-year></span></a>
+      <a class="btn btn--ghost" href="#vznik">Jak to vzniklo</a>
+    </div>
+    <p class="hero__partners">Pořádá <b>NRC</b> · generální partner <b>HOTHESS</b> · partner <b>Rallyservice</b></p>
+  </div>
+  <a class="hero__scroll" href="#rocnik" aria-label="Dolů"></a>
+</section>
+
+<!-- FACTS -->
+<section class="facts">
+  <div class="wrap facts__grid">
+    <div><b>3</b><span>unikátní rychlostní zkoušky</span></div>
+    <div><b>1:1</b><span>věrné reálné předloze</span></div>
+    <div><b>2020</b><span>premiéra online závodu</span></div>
+    <div><b>RBR</b><span>Richard Burns Rally</span></div>
+  </div>
+</section>
+
+<!-- AKTUALNI ROCNIK -->
+<section class="sec" id="rocnik">
+  <div class="wrap">
+    <p class="eyebrow">Aktuální ročník</p>
+    <h2>Mikuláš Rally Online <span data-year></span></h2>
+    <div class="edition">
+      <div class="edition__main">
+        <p class="edition__status" id="edStatus"></p>
+        <p>Závodí se v <strong>Richard Burns Rally</strong> na mapě věrně přenesené ze skutečné Mikuláš Rally ve Slušovicích. Stejné tratě, stejné prostředí, stejný závod, který každoročně uzavírá českou motoristickou sezonu – jen online.</p>
+        <ul class="ticks">
+          <li>Registrace probíhá online přes registrační formulář</li>
+          <li>Zvláštní ustanovení a pravidla závodu najdete níže</li>
+          <li>Průběžné výsledky a časy na výsledkovém portálu</li>
+        </ul>
+        <div class="edition__cta">
+          <a class="btn" href="#" data-reg id="regMain">Registrovat se</a>
+          <a class="btn btn--ghost" href="#zu">Zvláštní ustanovení</a>
+        </div>
+      </div>
+      <figure class="edition__photo"><img src="img/foto-2.jpg" alt="Servisní park Mikuláš Rally Online" loading="lazy"><figcaption>Cílová rovinka ve virtuálních Slušovicích</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- TRATE -->
+<section class="sec sec--alt" id="trate">
+  <div class="wrap">
+    <p class="eyebrow">Rychlostní zkoušky</p>
+    <h2>Tratě</h2>
+    <div class="stages">
+      <article class="stage"><span class="stage__no">RZ 1 / 3</span><h3>Dostihovka okruh</h3><p class="stage__km">5,37 km</p><p>Okruh na slušovické dostihovce, jede se dvakrát.</p></article>
+      <article class="stage"><span class="stage__no">RZ 2 / 4</span><h3>Fagus Lípa</h3><p class="stage__km">6,69 km</p><p>Z Lípy do Slušovic, start v areálu firmy Fagus. Jede se dvakrát.</p></article>
+      <article class="stage"><span class="stage__no">RZ 5</span><h3>Dostihovka final stage</h3><p class="stage__km">1,17 km</p><p>Krátký exhibiční test na závěr závodu.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- HARMONOGRAM -->
+<section class="sec" id="harmonogram">
+  <div class="wrap">
+    <p class="eyebrow">Průběh závodu</p>
+    <h2>Harmonogram</h2>
+    <ol class="schedule" id="schedule"></ol>
+    <p class="note">Přesné termíny budou upřesněny v zvláštním ustanovení. Změny vyhrazeny.</p>
+  </div>
+</section>
+
+<!-- ZU -->
+<section class="sec sec--alt" id="zu">
+  <div class="wrap wrap--narrow">
+    <p class="eyebrow">Dokumenty</p>
+    <h2>Zvláštní ustanovení</h2>
+    <p>Zvláštní ustanovení (ZU) určuje pravidla, kategorie, technické podmínky a průběh závodu. Před registrací si ho prosím pečlivě přečtěte.</p>
+    <div class="docs" id="docs"></div>
+    <details class="acc"><summary>Základní pravidla</summary><div>
+      <ul class="ticks">
+        <li>Hra: Richard Burns Rally s mapou Mikuláš Rally Online.</li>
+        <li>Každý jezdec startuje s vlastní registrací; startovní pořadí určuje pořadatel.</li>
+        <li>Počasí je dané mapou a je pro všechny stejné.</li>
+        <li>Časy se odesílají přes výsledkový portál. Podezřelé časy podléhají kontrole.</li>
+        <li>Rozhoduje ředitel závodu; pravidla chování a fair play jsou součástí ZU.</li>
+      </ul>
+      <p class="note">Úplné znění a technické podmínky viz dokument ZU výše.</p>
+    </div></details>
+  </div>
+</section>
+
+<!-- REGISTRACE -->
+<section class="reg" id="registrace">
+  <div class="wrap wrap--narrow reg__box">
+    <h2>Chceš jet?</h2>
+    <p>Registrace do ročníku <b data-year></b> probíhá online. Stačí vyplnit formulář a stáhnout si mapu.</p>
+    <a class="btn btn--lg" href="#" data-reg>Přejít na registraci →</a>
+  </div>
+</section>
+
+<!-- HISTORIE -->
+<section class="sec" id="vznik">
+  <div class="wrap">
+    <p class="eyebrow">Příběh projektu</p>
+    <h2>Jak to vzniklo</h2>
+    <div class="story">
+      <p class="story__lead">Mikuláš Rally ze Slušovic každoročně uzavírá motoristickou sezonu v Česku. Jaro 2020 ale nepřálo žádnému závodu – a tak vznikl nápad přenést celou rally do virtuální reality.</p>
+      <p>Hlavní partner reálného závodu, společnost <b>HOTHESS s.r.o.</b>, převzal i online variantu. Ve spolupráci s promotérskou skupinou <b>NRC</b> za pár měsíců převedl slušovickou rally do hry Richard Burns Rally. Premiéra proběhla jako <b>HOTHESS Mikuláš Rally Online 2020</b> – jako první na světě v takto věrné podobě oproti skutečné předloze.</p>
+    </div>
+    <ol class="timeline" id="timeline"></ol>
+    <div class="tech">
+      <h3>Pár technických zajímavostí</h3>
+      <ul class="ticks">
+        <li>Budovy a prostředí vznikaly podle OSM map a fotografií z místa.</li>
+        <li>Počasí je převzato z front-endu RBR (Map04).</li>
+        <li>K výrobě a testování tratí sloužil nástroj <b>Wallaby</b>.</li>
+        <li>Dostihovka vznikla ve spolupráci s Myrou43, Zádveřice upravil Mira Kurek.</li>
+      </ul>
+    </div>
+    <div class="gallery" id="gallery">
+      <img src="img/foto-4.jpg" alt="HOTHESS Škoda Fabia" loading="lazy">
+      <img src="img/foto-5.jpg" alt="Slušovická dostihovka" loading="lazy">
+      <img src="img/foto-6.jpg" alt="Ford Fiesta NRC" loading="lazy">
+      <img src="img/foto-3.jpg" alt="Škoda Fabia Kužela" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- SIN SLAVY -->
+<section class="sec sec--dark" id="sin-slavy">
+  <div class="wrap">
+    <p class="eyebrow">Archiv</p>
+    <h2>Síň slávy</h2>
+    <p class="lead">Všichni vítězové a výsledky dosavadních ročníků Mikuláš Rally Online.</p>
+    <div class="hall" id="hall"></div>
+  </div>
+</section>
+
+<!-- REPORTAZE -->
+<section class="sec" id="reportaze">
+  <div class="wrap">
+    <p class="eyebrow">Video</p>
+    <h2>Reportáže</h2>
+    <div class="videos">
+      <div class="video"><div class="video__frame" data-yt="njRhdgw8zao"></div><p>Reportáž – HOTHESS Mikuláš Rally Online 2020</p></div>
+      <div class="video"><div class="video__frame" data-yt="HDnZyy32mhM"></div><p>Mikuláš Rally Online – video</p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <img src="img/mikulas_logo_bile.svg" alt="Mikuláš Rally Online" class="foot__logo">
+    <div>
+      <p>Pořadatel: NRC · generální partner HOTHESS s.r.o. · partner Rallyservice</p>
+      <p class="foot__small">Mikuláš Rally Online je fanouškovský virtuální závod ve hře Richard Burns Rally.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

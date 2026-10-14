@@ -3,12 +3,11 @@ window.MRO = {
   // --- aktuální ročník ---
   year: 2026,
   // "soon" = registrace ještě nespuštěna, "open" = otevřená, "closed" = uzavřena
-  status: "soon",
-  // TODO: doplnit skutečný odkaz na registraci ročníku
-  registrationUrl: "https://dansimek.wixsite.com/newnrc/mikulas-rally",
+  status: "open",
+  registrationUrl: "https://rbr.onlineracing.cz/tour/cc96f38bbb105972d36e9e4a9c3c3466",
   statusText: {
     soon: "Registrace bude brzy spuštěna. Sleduj tuto stránku.",
-    open: "Registrace je otevřená!",
+    open: "6. ročník · 21.–27. 11. 2026",
     closed: "Registrace je uzavřena."
   },
 
@@ -16,7 +15,7 @@ window.MRO = {
   docs: [
     { title: "Zvláštní ustanovení", url: "" },
     { title: "Harmonogram", url: "" },
-    { title: "Mapy", url: "" }
+    { title: "Povinné textury", url: "" }
   ],
 
   // --- historie / timeline z roku 2020 ---

@@ -328,3 +328,12 @@ a.foot__logo:hover{opacity:1;transform:translateY(-3px)}
 .credits__list dt{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .credits__list dd{font-size:1.1rem;font-weight:800;color:var(--ink)}
 @media (max-width:620px){.credits__list{grid-template-columns:1fr}}
+
+.lnk{color:var(--pink);font-weight:700}
+.racex{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;background:var(--ink);border-radius:16px;padding:20px 26px;margin:26px 0 4px}
+.racex__logo{display:block;flex:0 0 auto}
+.racex__logo img{height:56px;width:auto;display:block;transition:opacity .2s}
+.racex__logo:hover img{opacity:.8}
+.racex__links{display:flex;flex-wrap:wrap;gap:8px 22px}
+.racex__links a{color:#fff;font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border-bottom:2px solid var(--pink);padding-bottom:2px}
+.racex__links a:hover{color:var(--ice)}

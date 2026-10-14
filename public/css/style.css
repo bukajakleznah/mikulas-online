@@ -178,16 +178,17 @@ a.doc:hover{border-color:var(--pink)}
 
 /* intro: text vlevo, video vpravo plynule přechází */
 .intro{position:relative;background:var(--ink);color:#fff;overflow:hidden;min-height:min(86vh,760px);display:flex;align-items:center}
-.intro__media{position:absolute;top:0;right:0;bottom:0;width:74%;background:url(../img/foto-4.jpg) center/cover;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 42%);mask-image:linear-gradient(90deg,transparent 0,#000 42%)}
+.intro__media{position:absolute;top:0;right:0;bottom:0;width:80%;background:url(../img/foto-4.jpg) center/cover;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 55%);mask-image:linear-gradient(90deg,transparent 0,#000 55%)}
+.intro__media::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(11,16,32,.92) 0,rgba(11,16,32,.78) 38%,rgba(11,16,32,.25) 70%,rgba(11,16,32,.1))}
 .intro__video{position:absolute;inset:0;opacity:0;transition:opacity 1.2s;pointer-events:none;background:#000}
 .intro__video.is-on{opacity:1}
 .intro__video video,.intro__video iframe{position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;transform:translate(-50%,-50%);border:0;object-fit:cover}
 .intro__video iframe{width:max(100%,177.78vh);height:max(100%,56.25vw)}
 .intro__inner{position:relative;z-index:2;padding-block:clamp(56px,8vw,100px)}
-.intro__text{max-width:520px;text-shadow:0 2px 18px rgba(11,16,32,.7)}
+.intro__text{max-width:540px;text-shadow:0 1px 3px rgba(11,16,32,.9),0 2px 18px rgba(11,16,32,.8)}
 .intro__text h2{margin-bottom:20px}
 .intro__lead{font-size:1.2rem;font-weight:600;color:#fff;line-height:1.5}
-.intro__text p{color:#dbe4f0}
+.intro__text p{color:#f1f5fb}
 .intro__text p+p{margin-top:1em}
 .intro__text b{color:#fff}
 .intro__more{margin-top:28px}
@@ -198,6 +199,7 @@ a.doc:hover{border-color:var(--pink)}
 @media (max-width:900px){
   .intro{display:block;min-height:0}
   .intro__media{position:relative;width:100%;aspect-ratio:16/9;-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
+  .intro__media::after{background:linear-gradient(180deg,transparent 40%,rgba(11,16,32,.6))}
   .intro__inner{padding-top:8px}
   .intro__sound{top:calc(min(100vw,100%)*.5625 - 56px);bottom:auto}
 }

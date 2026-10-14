@@ -294,3 +294,19 @@ a.doc:hover{border-color:var(--pink)}
 .rm__t .ch{width:42px;font-size:.68rem;font-weight:800;text-align:center;padding-inline:2px}
 .rm__t .up{color:#4cd48a}.rm__t .dn{color:#ff6b8b}
 .rm--dual .rm__scroll{overflow:visible}
+
+/* poděkování */
+.thanks{background:var(--paper);padding:clamp(56px,8vw,96px) 0;text-align:center}
+.thanks h2{font-size:clamp(1.5rem,3.4vw,2.2rem);margin-bottom:40px}
+.thanks__logos{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;align-items:stretch}
+.thanks__logos li{display:flex;flex-direction:column;gap:12px;align-items:center}
+.thanks__logo{display:flex;align-items:center;justify-content:center;width:100%;height:150px;background:#fff;border-radius:16px;padding:22px 26px;box-shadow:0 8px 28px rgba(11,16,32,.07);transition:transform .2s,box-shadow .2s;text-decoration:none}
+a.thanks__logo:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(230,0,126,.18)}
+.thanks__logo img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.thanks__logo--plugin{padding:14px}
+.thanks__logo--plugin img{border-radius:6px}
+.thanks__logo--hothess{color:#111}
+.thanks__logos li>span:last-child{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.zmod{font-family:'Permanent Marker',cursive;font-size:clamp(1.3rem,2.1vw,1.85rem);white-space:nowrap;color:#3152b5;line-height:1.1;text-shadow:-1px -1px 1px rgba(0,0,0,.2)}
+@media (max-width:900px){.thanks__logos{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){.thanks__logos{gap:14px}.thanks__logo{height:120px;padding:16px}}

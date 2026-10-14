@@ -21,7 +21,6 @@
   <button class="nav__burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
   <nav class="nav__links" id="links">
     <a href="#rocnik">Ročník <span data-year></span></a>
-    <a href="#harmonogram">Harmonogram</a>
     <a href="#intro">Jak to vzniklo</a>
     <a href="#sin-slavy">Síň slávy</a>
     <a href="#reportaze">Reportáže</a>
@@ -70,11 +69,10 @@
       <p class="intro__lead">Předobrazem virtuálního podniku se stala slušovická Mikuláš Rally, která každoročně uzavírá motoristickou sezonu v Česku.</p>
       <p>Hlavní partner jejího ročníku 2019, společnost <b>HOTHESS s.r.o.</b>, si vzala pod křídla i její online variantu a během několika měsíců ve spolupráci s promotérskou skupinou <b>NRC</b> kompletně převedla do virtuální reality tehdejší podobu mikulášského závodu.</p>
       <p>Na jezdce tak čekala hned trojice nových rychlostních zkoušek – divácky populární okruh okolo slušovického dostihového závodiště a klasická rychlostní zkouška vedoucí z Lípy do Slušovic (obě se jedou dvakrát) – a na závěr krátký exhibiční test využívající opět část slušovického okruhu.</p>
-      <p>Premiéra se uskutečnila ve dnech <b>3.–8. 11. 2020</b> jako <b>HOTHESS Mikuláš Rally Online 2020</b> – <b>kompletních 100 %</b> podle reálné předlohy.</p>
+      <p>Premiéra se uskutečnila ve dnech <b>3.–8. 11. 2020</b> pod názvem <b>HOTHESS Mikuláš Rally Online 2020</b> – jako závěrečný podnik MMČR v Online Rally, který se jel na českém pluginu pro hru Richard Burns Rally. A to všechno v <b>kompletních 100 %</b> podle reálné předlohy.</p>
       <a class="btn btn--sm intro__more" href="#vznik">Celý příběh a vývoj tratí</a>
     </div>
   </div>
-  <button class="intro__sound" id="heroSound" type="button" hidden aria-label="Zapnout zvuk"><span class="ico"></span><span class="lbl">Zapnout zvuk</span></button>
 </section>
 
 <!-- AKTUALNI ROCNIK -->
@@ -86,14 +84,10 @@
       <div class="edition__main">
         <p class="edition__status" id="edStatus"></p>
         <p>Závodí se v <strong>Richard Burns Rally</strong> na mapě věrně přenesené ze skutečné Mikuláš Rally ve Slušovicích. Stejné tratě, stejné prostředí, stejný závod, který každoročně uzavírá českou motoristickou sezonu – jen online.</p>
-        <ul class="ticks">
-          <li>Registrace probíhá online přes registrační formulář</li>
-          <li>Zvláštní ustanovení a pravidla závodu najdete níže</li>
-          <li>Průběžné výsledky a časy na výsledkovém portálu</li>
-        </ul>
+        <h3 class="edition__h">Dokumenty ke stažení</h3>
+        <div class="docs" id="docs"></div>
         <div class="edition__cta">
           <a class="btn" href="#" data-reg id="regMain">Registrovat se</a>
-          <a class="btn btn--ghost" href="#zu">Zvláštní ustanovení</a>
         </div>
       </div>
       <figure class="edition__photo"><img src="img/foto-2.jpg" alt="Servisní park Mikuláš Rally Online" loading="lazy"><figcaption>Cílová rovinka ve virtuálních Slušovicích</figcaption></figure>
@@ -111,40 +105,6 @@
       <article class="stage"><span class="stage__no">RZ 2 / 4</span><h3>Fagus – Lípa</h3><p class="stage__km">6,69 km</p><p>Klasická rychlostní zkouška z Lípy do Slušovic. Jede se dvakrát.</p><button class="stage__real" type="button" data-video="a_SiMfRN4Ro">▶ Reálná podoba</button></article>
       <article class="stage"><span class="stage__no">RZ 5</span><h3>Dostihovka final stage</h3><p class="stage__km">1,17 km</p><p>Krátký exhibiční test na závěr, využívající opět část slušovického okruhu.</p></article>
     </div>
-    <figure class="map">
-      <img src="img/mapa-2020.jpg" alt="Celková mapa Mikuláš Rally Online 3.–8. 11. 2020" loading="lazy">
-      <figcaption>Celková mapa závodu – ročník 3.–8. 11. 2020. <a href="img/mapa-2020.jpg" target="_blank" rel="noopener">Otevřít ve velkém</a></figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- HARMONOGRAM -->
-<section class="sec" id="harmonogram">
-  <div class="wrap">
-    <p class="eyebrow">Průběh závodu</p>
-    <h2>Harmonogram</h2>
-    <ol class="schedule" id="schedule"></ol>
-    <p class="note">Přesné termíny budou upřesněny v zvláštním ustanovení. Změny vyhrazeny.</p>
-  </div>
-</section>
-
-<!-- ZU -->
-<section class="sec sec--alt" id="zu">
-  <div class="wrap wrap--narrow">
-    <p class="eyebrow">Dokumenty</p>
-    <h2>Zvláštní ustanovení</h2>
-    <p>Zvláštní ustanovení (ZU) určuje pravidla, kategorie, technické podmínky a průběh závodu. Před registrací si ho prosím pečlivě přečtěte.</p>
-    <div class="docs" id="docs"></div>
-    <details class="acc"><summary>Základní pravidla</summary><div>
-      <ul class="ticks">
-        <li>Hra: Richard Burns Rally s mapou Mikuláš Rally Online.</li>
-        <li>Každý jezdec startuje s vlastní registrací; startovní pořadí určuje pořadatel.</li>
-        <li>Počasí je dané mapou a je pro všechny stejné.</li>
-        <li>Časy se odesílají přes výsledkový portál. Podezřelé časy podléhají kontrole.</li>
-        <li>Rozhoduje ředitel závodu; pravidla chování a fair play jsou součástí ZU.</li>
-      </ul>
-      <p class="note">Úplné znění a technické podmínky viz dokument ZU výše.</p>
-    </div></details>
   </div>
 </section>
 
@@ -152,7 +112,7 @@
 <section class="reg" id="registrace">
   <div class="wrap wrap--narrow reg__box">
     <h2>Chceš jet?</h2>
-    <p>Registrace do ročníku <b data-year></b> probíhá online. Stačí vyplnit formulář a stáhnout si mapu.</p>
+    <p>Registrace do ročníku <b data-year></b> probíhá online. Stačí vyplnit registrační formulář.</p>
     <a class="btn btn--lg" href="#" data-reg>Přejít na registraci →</a>
   </div>
 </section>

@@ -12,20 +12,11 @@ window.MRO = {
     closed: "Registrace je uzavřena."
   },
 
-  // --- harmonogram aktuálního ročníku (TODO: doplnit termíny z ZU) ---
-  schedule: [
-    { when: "Bude upřesněno", what: "Zveřejnění zvláštního ustanovení" },
-    { when: "Bude upřesněno", what: "Zahájení registrace" },
-    { when: "Bude upřesněno", what: "Uzávěrka registrace a zveřejnění startovní listiny" },
-    { when: "Bude upřesněno", what: "Zveřejnění mapy ke stažení" },
-    { when: "Bude upřesněno", what: "Start závodu – RZ 1 až RZ 4" },
-    { when: "Bude upřesněno", what: "Exhibiční RZ 5 a vyhlášení výsledků" }
-  ],
-
-  // --- dokumenty (TODO: nahrát PDF do public/docs a doplnit url) ---
+  // --- PDF u aktuálního ročníku: nahrát do public/docs/ a doplnit url, např. "docs/zu-2026.pdf" ---
   docs: [
-    { title: "Zvláštní ustanovení " + 2026, url: "" },
-    { title: "Pravidla a kodex jezdce", url: "" }
+    { title: "Zvláštní ustanovení", url: "" },
+    { title: "Harmonogram", url: "" },
+    { title: "Mapy", url: "" }
   ],
 
   // --- historie / timeline z roku 2020 ---

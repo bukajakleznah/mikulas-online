@@ -12,11 +12,6 @@
   });
   var st = $('#edStatus'); st.textContent = D.statusText[D.status]; if (D.status === 'open') st.classList.add('is-open');
 
-  // harmonogram
-  $('#schedule').innerHTML = D.schedule.map(function (s) {
-    return '<li><b>' + esc(s.when) + '</b><span>' + esc(s.what) + '</span></li>';
-  }).join('');
-
   // dokumenty
   $('#docs').innerHTML = D.docs.map(function (d) {
     return d.url
@@ -62,7 +57,7 @@
   $$('a', links).forEach(function (a) { a.addEventListener('click', function () { links.classList.remove('is-open'); burger.setAttribute('aria-expanded', 'false'); }); });
 
   // reveal
-  $$('.stage, .edition__main, .edition__photo, .tech, .story, .doc, .gallery img, .video, .schedule li').forEach(function (e) { e.classList.add('rv'); });
+  $$('.stage, .edition__main, .edition__photo, .tech, .story, .doc, .gallery img, .video').forEach(function (e) { e.classList.add('rv'); });
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (en) {
       en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('is-in'); io.unobserve(x.target); } });
@@ -71,16 +66,16 @@
   } else { $$('.rv').forEach(function (e) { e.classList.add('is-in'); }); }
 
   // --- intro video: vlastní soubor video/intro.mp4, jinak záloha přes YouTube; samo se spustí bez zvuku ---
-  var media = $('#introMedia'), hv = $('#heroVideo'), snd = $('#heroSound');
+  var media = $('#introMedia'), hv = $('#heroVideo');
   var saveData = navigator.connection && navigator.connection.saveData;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (media && !saveData && !reduce) {
-    var player = null, started = false, muted = true;
-    var shown = function () { hv.classList.add('is-on'); snd.hidden = false; };
+    var player = null, started = false;
+    var shown = function () { hv.classList.add('is-on'); };
     var initYT = function () {
       var vid = media.getAttribute('data-yt');
       var fr = document.createElement('iframe');
-      fr.src = 'https://www.youtube-nocookie.com/embed/' + vid + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + vid +
+      fr.src = 'https://www.youtube-nocookie.com/embed/' + vid + '?autoplay=1&mute=1&start=13&controls=0&loop=1&playlist=' + vid +
         '&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
       fr.allow = 'autoplay; encrypted-media'; fr.tabIndex = -1; fr.title = 'Intro';
       var cmd = function (f, a) { try { fr.contentWindow.postMessage(JSON.stringify({ event: 'command', func: f, args: a || [] }), '*'); } catch (e) {} };
@@ -96,8 +91,7 @@
       });
       hv.appendChild(fr);
       player = {
-        play: function () { cmd('playVideo'); }, pause: function () { cmd('pauseVideo'); },
-        mute: function (m) { cmd(m ? 'mute' : 'unMute'); if (!m) cmd('setVolume', [80]); cmd('playVideo'); }
+        play: function () { cmd('playVideo'); }, pause: function () { cmd('pauseVideo'); }
       };
     };
     var initFile = function () {
@@ -109,8 +103,7 @@
       hv.appendChild(v);
       v.play().catch(function () {});
       player = {
-        play: function () { v.play().catch(function () {}); }, pause: function () { v.pause(); },
-        mute: function (m) { v.muted = !m ? false : true; v.play().catch(function () {}); }
+        play: function () { v.play().catch(function () {}); }, pause: function () { v.pause(); }
       };
     };
     var start = function () {
@@ -120,10 +113,6 @@
         (r.ok && ct.indexOf('video') === 0) ? initFile() : initYT();
       }).catch(initYT);
     };
-    snd.addEventListener('click', function () {
-      muted = !muted; if (player) player.mute(muted);
-      snd.classList.toggle('is-on', !muted); snd.querySelector('.lbl').textContent = muted ? 'Zapnout zvuk' : 'Vypnout zvuk';
-    });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) {
         if (en[0].isIntersecting) { start(); if (player) player.play(); } else if (player) { player.pause(); }

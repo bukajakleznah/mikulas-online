@@ -341,3 +341,5 @@ a.foot__logo:hover{opacity:1;transform:translateY(-3px)}
 .edition__photo img{object-position:38% center}
 
 .nw{white-space:nowrap}
+
+.hero__lead .ln{display:block}

@@ -22,7 +22,7 @@
   <nav class="nav__links" id="links">
     <a href="#rocnik">Ročník <span data-year></span></a>
     <a href="#harmonogram">Harmonogram</a>
-    <a href="#vznik">Jak to vzniklo</a>
+    <a href="#intro">Jak to vzniklo</a>
     <a href="#sin-slavy">Síň slávy</a>
     <a href="#reportaze">Reportáže</a>
     <a class="btn btn--sm" href="#registrace" data-reg>Registrace</a>
@@ -41,7 +41,7 @@
     <p class="hero__lead">První virtuální závod na světě vytvořený <strong>ve 100% podobě</strong> oproti reálné předloze.</p>
     <div class="hero__cta">
       <a class="btn" href="#registrace" data-reg>Registrace do ročníku <span data-year></span></a>
-      <a class="btn btn--ghost" href="#vznik">Jak to vzniklo</a>
+      <a class="btn btn--ghost" href="#intro">Jak to vzniklo</a>
     </div>
     <p class="hero__partners">Pořádá <b>NRC</b> · generální partner <b>HOTHESS</b> · partner <b>Rallyservice</b></p>
   </div>
@@ -60,14 +60,21 @@
 
 <!-- INTRO -->
 <section class="intro" id="intro">
-  <div class="wrap">
-    <p class="eyebrow">Intro</p>
-    <h2>Takhle to vypadá</h2>
-    <div class="intro__frame">
-      <div class="intro__video" id="heroVideo" data-hero="HDnZyy32mhM"></div>
-      <button class="intro__sound" id="heroSound" type="button" hidden aria-label="Zapnout zvuk"><span class="ico"></span><span class="lbl">Zapnout zvuk</span></button>
+  <div class="intro__media" id="introMedia" data-yt="HDnZyy32mhM" data-src="video/intro.mp4">
+    <div class="intro__video" id="heroVideo"></div>
+  </div>
+  <div class="wrap intro__inner">
+    <div class="intro__text">
+      <p class="eyebrow">Příběh projektu</p>
+      <h2>Jak to vzniklo</h2>
+      <p class="intro__lead">Předobrazem virtuálního podniku se stala slušovická Mikuláš Rally, která každoročně uzavírá motoristickou sezonu v Česku.</p>
+      <p>Hlavní partner jejího ročníku 2019, společnost <b>HOTHESS s.r.o.</b>, si vzala pod křídla i její online variantu a během několika měsíců ve spolupráci s promotérskou skupinou <b>NRC</b> kompletně převedla do virtuální reality tehdejší podobu mikulášského závodu.</p>
+      <p>Na jezdce tak čekala hned trojice nových rychlostních zkoušek – divácky populární okruh okolo slušovického dostihového závodiště a klasická rychlostní zkouška vedoucí z Lípy do Slušovic (obě se jedou dvakrát) – a na závěr krátký exhibiční test využívající opět část slušovického okruhu.</p>
+      <p>Premiéra se uskutečnila ve dnech <b>3.–8. 11. 2020</b> jako <b>HOTHESS Mikuláš Rally Online 2020</b> – <b>kompletních 100 %</b> podle reálné předlohy.</p>
+      <a class="btn btn--sm intro__more" href="#vznik">Celý příběh a vývoj tratí</a>
     </div>
   </div>
+  <button class="intro__sound" id="heroSound" type="button" hidden aria-label="Zapnout zvuk"><span class="ico"></span><span class="lbl">Zapnout zvuk</span></button>
 </section>
 
 <!-- AKTUALNI ROCNIK -->
@@ -153,14 +160,8 @@
 <!-- HISTORIE -->
 <section class="sec" id="vznik">
   <div class="wrap">
-    <p class="eyebrow">Příběh projektu</p>
-    <h2>Jak to vzniklo</h2>
-    <div class="story">
-      <p class="story__lead">Předobrazem virtuálního podniku se stala slušovická Mikuláš Rally, která každoročně uzavírá motoristickou sezonu v Česku.</p>
-      <p>Hlavní partner jejího ročníku 2019, společnost <b>HOTHESS s.r.o.</b>, si vzala pod křídla i její online variantu a během několika měsíců ve spolupráci s promotérskou skupinou <b>NRC</b> kompletně převedla do virtuální reality tehdejší podobu mikulášského závodu.</p>
-      <p>Na jezdce tak čekala hned trojice nových rychlostních zkoušek – divácky populární okruh okolo slušovického dostihového závodiště a klasická rychlostní zkouška vedoucí z Lípy do Slušovic (obě se jedou dvakrát) – a na závěr krátký exhibiční test využívající opět část slušovického okruhu.</p>
-      <p>Premiéra se uskutečnila ve dnech <b>3.–8. 11. 2020</b> jako <b>HOTHESS Mikuláš Rally Online 2020</b> – <b>kompletních 100 %</b> podle reálné předlohy.</p>
-    </div>
+    <p class="eyebrow">Vývoj tratí 2020</p>
+    <h2>Jak se stavělo</h2>
     <ol class="timeline" id="timeline"></ol>
     <div class="tech">
       <h3>Pár technických zajímavostí</h3>

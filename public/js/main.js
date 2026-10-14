@@ -70,39 +70,64 @@
     $$('.rv').forEach(function (e) { io.observe(e); });
   } else { $$('.rv').forEach(function (e) { e.classList.add('is-in'); }); }
 
-  // --- intro video: samo se spustí (bez zvuku), jakmile se přiblíží do obrazu ---
-  var hv = $('#heroVideo'), snd = $('#heroSound');
+  // --- intro video: vlastní soubor video/intro.mp4, jinak záloha přes YouTube; samo se spustí bez zvuku ---
+  var media = $('#introMedia'), hv = $('#heroVideo'), snd = $('#heroSound');
   var saveData = navigator.connection && navigator.connection.saveData;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (hv && !saveData && !reduce) {
-    var vid = hv.getAttribute('data-hero');
-    var fr = document.createElement('iframe');
-    fr.src = 'https://www.youtube-nocookie.com/embed/' + vid + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + vid +
-      '&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
-    fr.allow = 'autoplay; encrypted-media'; fr.tabIndex = -1; fr.title = 'Intro';
-    var cmd = function (f, a) { try { fr.contentWindow.postMessage(JSON.stringify({ event: 'command', func: f, args: a || [] }), '*'); } catch (e) {} };
-    window.addEventListener('message', function (e) {
-      if (e.source !== fr.contentWindow) return;
-      var d; try { d = JSON.parse(e.data); } catch (x) { return; }
-      var st = d && d.info && typeof d.info === 'object' ? d.info.playerState : (d && d.event === 'onStateChange' ? d.info : undefined);
-      if (st === 1 && !hv.classList.contains('is-on')) { hv.classList.add('is-on'); snd.hidden = false; }
-    });
-    fr.addEventListener('load', function () {
-      try { fr.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), '*'); } catch (e) {}
-      cmd('playVideo');
-    });
-    var started = false;
-    var muted = true;
+  if (media && !saveData && !reduce) {
+    var player = null, started = false, muted = true;
+    var shown = function () { hv.classList.add('is-on'); snd.hidden = false; };
+    var initYT = function () {
+      var vid = media.getAttribute('data-yt');
+      var fr = document.createElement('iframe');
+      fr.src = 'https://www.youtube-nocookie.com/embed/' + vid + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + vid +
+        '&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
+      fr.allow = 'autoplay; encrypted-media'; fr.tabIndex = -1; fr.title = 'Intro';
+      var cmd = function (f, a) { try { fr.contentWindow.postMessage(JSON.stringify({ event: 'command', func: f, args: a || [] }), '*'); } catch (e) {} };
+      window.addEventListener('message', function (e) {
+        if (e.source !== fr.contentWindow) return;
+        var d; try { d = JSON.parse(e.data); } catch (x) { return; }
+        var st = d && d.info && typeof d.info === 'object' ? d.info.playerState : (d && d.event === 'onStateChange' ? d.info : undefined);
+        if (st === 1) shown();
+      });
+      fr.addEventListener('load', function () {
+        try { fr.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), '*'); } catch (e) {}
+        cmd('playVideo');
+      });
+      hv.appendChild(fr);
+      player = {
+        play: function () { cmd('playVideo'); }, pause: function () { cmd('pauseVideo'); },
+        mute: function (m) { cmd(m ? 'mute' : 'unMute'); if (!m) cmd('setVolume', [80]); cmd('playVideo'); }
+      };
+    };
+    var initFile = function () {
+      var v = document.createElement('video');
+      v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.preload = 'auto';
+      v.src = media.getAttribute('data-src');
+      v.addEventListener('playing', shown);
+      v.addEventListener('error', function () { hv.removeChild(v); initYT(); }, { once: true });
+      hv.appendChild(v);
+      v.play().catch(function () {});
+      player = {
+        play: function () { v.play().catch(function () {}); }, pause: function () { v.pause(); },
+        mute: function (m) { v.muted = !m ? false : true; v.play().catch(function () {}); }
+      };
+    };
+    var start = function () {
+      if (started) return; started = true;
+      fetch(media.getAttribute('data-src'), { method: 'HEAD' }).then(function (r) {
+        var ct = r.headers.get('content-type') || '';
+        (r.ok && ct.indexOf('video') === 0) ? initFile() : initYT();
+      }).catch(initYT);
+    };
     snd.addEventListener('click', function () {
-      muted = !muted; cmd(muted ? 'mute' : 'unMute'); if (!muted) cmd('setVolume', [80]); cmd('playVideo');
+      muted = !muted; if (player) player.mute(muted);
       snd.classList.toggle('is-on', !muted); snd.querySelector('.lbl').textContent = muted ? 'Zapnout zvuk' : 'Vypnout zvuk';
     });
-    // pauza mimo obrazovku (šetří data i baterii)
-    var start = function () { if (!started) { started = true; hv.appendChild(fr); } };
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (en) {
-        if (en[0].isIntersecting) { start(); cmd('playVideo'); } else if (started) { cmd('pauseVideo'); }
-      }, { threshold: .35, rootMargin: '0px 0px 200px 0px' }).observe(hv.parentNode);
+        if (en[0].isIntersecting) { start(); if (player) player.play(); } else if (player) { player.pause(); }
+      }, { threshold: .3, rootMargin: '0px 0px 200px 0px' }).observe(media.parentNode);
     } else { start(); }
   }
 

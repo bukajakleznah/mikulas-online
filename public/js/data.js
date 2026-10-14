@@ -134,7 +134,7 @@ window.MRO = {
 
   // --- síň slávy: výsledky se generují z data/raw/<rok>.csv skriptem tools/build_results.py ---
   hall: [
-    { year: 2025, img: "img/foto-4.jpg" },
+    { year: 2025, img: "img/hero.jpg" },
     { year: 2024, img: "img/hall-2024.jpg" },
     { year: 2022, img: "img/foto-3.jpg" },
     { year: 2021, img: "img/foto-6.jpg" },

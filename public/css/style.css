@@ -48,8 +48,6 @@ a{color:inherit}
 .hero__lead{max-width:560px;font-size:clamp(1.05rem,2vw,1.35rem);margin:28px 0 34px;color:#e8eef6}
 .hero__lead strong{color:#fff;border-bottom:3px solid var(--pink)}
 .hero__cta{display:flex;flex-wrap:wrap;gap:14px}
-.hero__partners{margin-top:46px;font-size:.78rem;letter-spacing:.06em;color:#b5c2d6}
-.hero__partners b{color:#fff}
 .hero__scroll{position:absolute;bottom:26px;left:50%;width:26px;height:42px;border:2px solid rgba(255,255,255,.6);border-radius:14px;transform:translateX(-50%)}
 .hero__scroll::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:#fff;animation:wheel 1.6s infinite}
 @keyframes wheel{50%{transform:translateY(12px);opacity:.2}}
@@ -149,10 +147,6 @@ a.doc:hover{border-color:var(--pink)}
 .video p{margin-top:12px;font-weight:600;font-size:.95rem}
 
 /* footer */
-.foot{background:var(--ink);color:#b5c2d6;padding:46px 0}
-.foot__grid{display:flex;align-items:center;gap:36px}
-.foot__logo{height:110px;width:auto}
-.foot__small{font-size:.8rem;margin-top:6px;opacity:.7}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
@@ -174,7 +168,6 @@ a.doc:hover{border-color:var(--pink)}
 @media (max-width:620px){
   .stages,.hall{grid-template-columns:1fr}
   .schedule li,.timeline li{grid-template-columns:1fr;gap:2px}
-  .foot__grid{flex-direction:column;align-items:flex-start}
 }
 
 /* intro: text vlevo, video vpravo plynule přechází */
@@ -295,18 +288,16 @@ a.doc:hover{border-color:var(--pink)}
 .rm__t .up{color:#4cd48a}.rm__t .dn{color:#ff6b8b}
 .rm--dual .rm__scroll{overflow:visible}
 
-/* poděkování */
-.thanks{background:var(--paper);padding:clamp(56px,8vw,96px) 0;text-align:center}
-.thanks h2{font-size:clamp(1.5rem,3.4vw,2.2rem);margin-bottom:40px}
-.thanks__logos{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;align-items:stretch}
-.thanks__logos li{display:flex;flex-direction:column;gap:12px;align-items:center}
-.thanks__logo{display:flex;align-items:center;justify-content:center;width:100%;height:150px;background:#fff;border-radius:16px;padding:22px 26px;box-shadow:0 8px 28px rgba(11,16,32,.07);transition:transform .2s,box-shadow .2s;text-decoration:none}
-a.thanks__logo:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(230,0,126,.18)}
-.thanks__logo img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
-.thanks__logo--plugin{padding:14px}
-.thanks__logo--plugin img{border-radius:6px}
-.thanks__logo--hothess{color:#111}
-.thanks__logos li>span:last-child{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.zmod{font-family:'Permanent Marker',cursive;font-size:clamp(1.3rem,2.1vw,1.85rem);white-space:nowrap;color:#3152b5;line-height:1.1;text-shadow:-1px -1px 1px rgba(0,0,0,.2)}
-@media (max-width:900px){.thanks__logos{grid-template-columns:1fr 1fr}}
-@media (max-width:420px){.thanks__logos{gap:14px}.thanks__logo{height:120px;padding:16px}}
+/* patička: jen loga */
+.foot{background:var(--ink);padding:clamp(40px,6vw,64px) 0}
+.foot__logos{list-style:none;width:min(1120px,100% - 40px);margin:0 auto;display:flex;flex-wrap:wrap;gap:28px clamp(28px,6vw,72px);align-items:center;justify-content:center}
+.foot__logo{display:flex;align-items:center;justify-content:center;height:78px;text-decoration:none;opacity:.92;transition:opacity .2s,transform .2s}
+a.foot__logo:hover{opacity:1;transform:translateY(-3px)}
+.foot__logo img{height:100%;width:auto;max-width:100%;object-fit:contain}
+.foot__logo--plugin{height:68px}
+.foot__logo--plugin img{border-radius:4px}
+.foot__logo--nrc{height:64px}
+.foot__logo--nrc img{filter:brightness(0) invert(1)}
+.foot__logo--hothess{height:84px}
+.zmod{font-family:'Permanent Marker',cursive;font-size:clamp(1.6rem,2.6vw,2.1rem);color:#fff;white-space:nowrap;line-height:1.1}
+@media (max-width:620px){.foot__logos{gap:26px 36px}.foot__logo{height:60px}.foot__logo--plugin{height:54px}.foot__logo--nrc{height:50px}.foot__logo--hothess{height:66px}}

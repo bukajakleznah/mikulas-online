@@ -51,39 +51,98 @@
     });
   }).catch(function () {});
 
-  var rm;
+  var rm, RS = null, view = { stage: 0, mode: 'total', cls: '', q: '' };
   var openResults = function (year) {
     if (!rm) {
       rm = document.createElement('div'); rm.className = 'rm';
       rm.innerHTML = '<div class="rm__panel" role="dialog" aria-modal="true"><div class="rm__head"><div><h3 class="rm__title"></h3><p class="rm__sub"></p></div>' +
-        '<input class="rm__q" type="search" placeholder="Hledat jezdce nebo vůz…" aria-label="Hledat"><button class="rm__x" aria-label="Zavřít">×</button></div><div class="rm__body"></div></div>';
+        '<input class="rm__q" type="search" placeholder="Hledat jezdce nebo vůz…" aria-label="Hledat"><button class="rm__x" aria-label="Zavřít">×</button></div>' +
+        '<div class="rm__ctl"></div><div class="rm__body"></div></div>';
       document.body.appendChild(rm);
       var close = function () { rm.classList.remove('is-open'); document.body.style.overflow = ''; };
-      rm.addEventListener('click', function (e) { if (e.target === rm || e.target.className === 'rm__x') close(); });
+      rm.addEventListener('click', function (e) {
+        if (e.target === rm || e.target.className === 'rm__x') { close(); return; }
+        var b = e.target.closest('[data-st],[data-mode],[data-cls]'); if (!b) return;
+        if (b.hasAttribute('data-st')) view.stage = +b.getAttribute('data-st');
+        if (b.hasAttribute('data-mode')) view.mode = b.getAttribute('data-mode');
+        if (b.hasAttribute('data-cls')) view.cls = b.getAttribute('data-cls');
+        render();
+      });
+      $('.rm__q', rm).addEventListener('input', function () { view.q = this.value.trim().toLowerCase(); render(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
     }
     $('.rm__title', rm).textContent = 'Mikuláš Rally Online ' + year + ' – výsledky';
-    $('.rm__sub', rm).textContent = 'Načítám…'; $('.rm__body', rm).innerHTML = ''; $('.rm__q', rm).value = '';
+    $('.rm__sub', rm).textContent = 'Načítám…'; $('.rm__body', rm).innerHTML = ''; $('.rm__ctl', rm).innerHTML = ''; $('.rm__q', rm).value = '';
     rm.classList.add('is-open'); document.body.style.overflow = 'hidden';
     fetch('data/results-' + year + '.json').then(function (r) { return r.json(); }).then(function (R) {
-      $('.rm__sub', rm).textContent = R.drivers + ' jezdců · ' + R.finished + ' v cíli · ' + R.stages.length + ' RZ · časy včetně případných penalizací';
-      var lead = R.fin[0].total;
-      var head = '<tr><th>#</th><th>Jezdec</th><th class="car">Vůz</th>' + R.stages.map(function (s, i) { return '<th class="n st" title="' + esc(s) + '">RZ ' + (i + 1) + '</th>'; }).join('') + '<th class="n">Celkem</th><th class="n">Ztráta</th></tr>';
-      var body = R.fin.map(function (x) {
-        return '<tr class="' + (x.pos <= 3 ? 'top top' + x.pos : '') + '"><td class="pos">' + x.pos + '</td><td class="who"><b>' + esc(x.name) + '</b> <span class="cc">' + esc(x.cc) + '</span></td><td class="car">' + esc(x.car) + '</td>' +
-          x.st.map(function (t) { return '<td class="n st">' + fmtT(t) + '</td>'; }).join('') +
-          '<td class="n tot">' + fmtT(x.total) + (x.pen ? ' <small title="v čase je zahrnuta penalizace">pen. ' + x.pen + ' s</small>' : '') + '</td><td class="n gap">' + fmtG(x.total - lead) + '</td></tr>';
-      }).join('');
-      var dnf = R.dnf.length ? '<h4 class="rm__h">Nedokončili (' + R.dnf.length + ')</h4><table class="rm__t rm__t--dnf"><tbody>' + R.dnf.map(function (x) {
-        return '<tr><td class="who"><b>' + esc(x.name) + '</b> <span class="cc">' + esc(x.cc) + '</span></td><td class="car">' + esc(x.car) + '</td><td class="n">dojeto RZ: ' + x.done + ' / ' + R.stages.length + '</td></tr>';
-      }).join('') + '</tbody></table>' : '';
-      $('.rm__body', rm).innerHTML = '<div class="rm__scroll"><table class="rm__t"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>' + dnf;
+      RS = R; view = { stage: R.stages.length - 1, mode: 'total', cls: '', q: '' };
+      $('.rm__sub', rm).textContent = R.drivers + ' jezdců · ' + R.finished + ' v cíli · ' + R.stages.length + ' RZ';
+      render();
     }).catch(function () { $('.rm__sub', rm).textContent = 'Výsledky se nepodařilo načíst.'; });
-    $('.rm__q', rm).oninput = function () {
-      var q = this.value.trim().toLowerCase();
-      $$('.rm__t tbody tr', rm).forEach(function (tr) { tr.hidden = q && tr.textContent.toLowerCase().indexOf(q) < 0; });
-    };
   };
+
+  var render = function () {
+    var R = RS, n = R.stages.length, k = view.stage, i;
+    // ovládání: RZ, režim, třídy
+    var ctl = '<div class="seg" role="tablist">';
+    for (i = 0; i < n; i++) ctl += '<button type="button" data-st="' + i + '" class="' + (i === k ? 'is-on' : '') + '" title="' + esc(R.stages[i]) + '">RZ ' + (i + 1) + '</button>';
+    ctl += '</div><div class="seg seg--mode"><button type="button" data-mode="stage" class="' + (view.mode === 'stage' ? 'is-on' : '') + '">Čas na RZ ' + (k + 1) + '</button>' +
+      '<button type="button" data-mode="total" class="' + (view.mode === 'total' ? 'is-on' : '') + '">' + (k === n - 1 ? 'Celkové pořadí' : 'Celkově po RZ ' + (k + 1)) + '</button></div>';
+    if (R.classes.length > 1) {
+      ctl += '<div class="seg seg--cls"><button type="button" data-cls="" class="' + (view.cls === '' ? 'is-on' : '') + '">Vše</button>' +
+        R.classes.map(function (c) { return '<button type="button" data-cls="' + esc(c) + '" class="' + (view.cls === c ? 'is-on' : '') + '">' + esc(c) + '</button>'; }).join('') + '</div>';
+    }
+    $('.rm__ctl', rm).innerHTML = ctl + '<p class="rm__stage">' + esc(R.stages[k]) + '</p>';
+
+    // data: pořadí podle režimu
+    var rows = [], dnf = [];
+    R.d.forEach(function (d) {
+      if (view.mode === 'stage') {
+        var t = d.st[k]; if (t != null) rows.push({ d: d, t: t }); else dnf.push(d);
+      } else {
+        var s = 0, ok = true;
+        for (var j = 0; j <= k; j++) { if (d.st[j] == null) { ok = false; break; } s += d.st[j]; }
+        if (ok) rows.push({ d: d, t: s }); else dnf.push(d);
+      }
+    });
+    rows.sort(function (a, b) { return a.t - b.t; });
+    if (view.cls) { rows = rows.filter(function (r) { return r.d.cl === view.cls; }); dnf = dnf.filter(function (d) { return d.cl === view.cls; }); }
+    var q = view.q;
+    if (q) {
+      var m = function (d) { return (d.n + ' ' + d.car).toLowerCase().indexOf(q) >= 0; };
+      rows = rows.filter(function (r) { return m(r.d); }); dnf = dnf.filter(m);
+    }
+    // pořadí a ztráty se počítají v rámci vybrané třídy, ne podle hledání
+    var clsRows = rows;
+    if (q) {
+      clsRows = [];
+      R.d.forEach(function (d) {
+        if (view.cls && d.cl !== view.cls) return;
+        var t;
+        if (view.mode === 'stage') t = d.st[k]; else { t = 0; for (var j = 0; j <= k; j++) { if (d.st[j] == null) { t = null; break; } t += d.st[j]; } }
+        if (t != null) clsRows.push({ d: d, t: t });
+      });
+      clsRows.sort(function (a, b) { return a.t - b.t; });
+    }
+    var lead, rank = new Map(); clsRows.forEach(function (r, ix) { rank.set(r.d, ix + 1); });
+    lead = clsRows.length ? clsRows[0].t : 0;
+    var prevT = new Map(); clsRows.forEach(function (r, ix) { prevT.set(r.d, ix ? r.t - clsRows[ix - 1].t : 0); });
+
+    var body = rows.map(function (r) {
+      var p = rank.get(r.d), g = r.t - lead;
+      return '<tr class="' + (p <= 3 ? 'top top' + p : '') + '"><td class="pos">' + p + '</td><td class="who"><b>' + esc(r.d.n) + '</b> <span class="cc">' + esc(r.d.cc) + '</span></td>' +
+        '<td class="car">' + esc(r.d.car) + '</td><td class="cl">' + esc(r.d.cl) + '</td>' +
+        '<td class="n tot">' + fmtT(r.t) + '</td><td class="n gap">' + (p > 1 ? '+' + fmtT(g) : '') + '</td><td class="n gap2">' + (p > 1 ? '+' + fmtT(prevT.get(r.d)) : '') + '</td></tr>';
+    }).join('');
+    var head = '<tr><th>#</th><th>Jezdec</th><th class="car">Vůz</th><th class="cl">Třída</th><th class="n">' + (view.mode === 'stage' ? 'Čas' : 'Celkem') + '</th><th class="n">Ztráta</th><th class="n gap2">Předch.</th></tr>';
+    var note = view.mode === 'stage' ? 'nedojeli tuto RZ' : (k === n - 1 ? 'nedokončili' : 'nedojeli do RZ ' + (k + 1));
+    var dn = dnf.length ? '<h4 class="rm__h">' + note + ' (' + dnf.length + ')</h4><table class="rm__t rm__t--dnf"><tbody>' + dnf.map(function (d) {
+      var done = d.st.filter(function (x) { return x != null; }).length;
+      return '<tr><td class="who"><b>' + esc(d.n) + '</b> <span class="cc">' + esc(d.cc) + '</span></td><td class="car">' + esc(d.car) + '</td><td class="cl">' + esc(d.cl) + '</td><td class="n">dojeto RZ: ' + done + ' / ' + n + '</td></tr>';
+    }).join('') + '</tbody></table>' : '';
+    $('.rm__body', rm).innerHTML = (rows.length ? '<div class="rm__scroll"><table class="rm__t"><thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>' : '<p class="rm__empty">Žádný výsledek.</p>') + dn;
+  };
+
   hall.addEventListener('click', function (e) {
     var b = e.target.closest('[data-results]'); if (b) openResults(b.getAttribute('data-results'));
   });

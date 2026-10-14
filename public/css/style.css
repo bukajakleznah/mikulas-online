@@ -267,3 +267,17 @@ a.doc:hover{border-color:var(--pink)}
 .rm__h{margin:30px 0 8px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
 .rm__t--dnf td{color:#9fb0c8}
 @media (max-width:620px){.rm{padding:0}.rm__panel{border-radius:0}.rm__t .st,.rm__t th.st{display:none}.rm__t .car,.rm__t th.car{display:none}.rm__t td,.rm__t th{padding-inline:5px}.rm__t{font-size:.78rem}.rm__t .who{white-space:normal}.rm__t .cc,.rm__t .tot small{display:none}.rm__t .pos{width:28px}.rm__body{padding:0 12px 18px}}
+
+/* výsledky – přepínače */
+.rm__ctl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:12px 22px;border-bottom:1px solid rgba(255,255,255,.08)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{background:rgba(255,255,255,.07);color:#cfd9e8;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 14px;font:700 .75rem/1 'Montserrat',sans-serif;letter-spacing:.04em;cursor:pointer;transition:.12s}
+.seg button:hover{border-color:var(--pink);color:#fff}
+.seg button.is-on{background:var(--pink);border-color:var(--pink);color:#fff}
+.seg--cls button{border-radius:8px;padding:6px 10px}
+.seg--mode button{border-radius:8px}
+.rm__stage{flex-basis:100%;font-size:.78rem;color:#9fb0c8;margin:0}
+.rm__empty{padding:30px 0;color:#9fb0c8}
+.rm__t .cl{color:#9fb0c8;font-weight:700;font-size:.78rem}
+.rm__t .gap2{color:#7f90aa}
+@media (max-width:620px){.rm__ctl{padding:10px 12px}.rm__t .cl,.rm__t th.cl,.rm__t .gap2,.rm__t th.gap2{display:none}.seg button{padding:7px 11px}}

@@ -281,3 +281,16 @@ a.doc:hover{border-color:var(--pink)}
 .rm__t .cl{color:#9fb0c8;font-weight:700;font-size:.78rem}
 .rm__t .gap2{color:#7f90aa}
 @media (max-width:620px){.rm__ctl{padding:10px 12px}.rm__t .cl,.rm__t th.cl,.rm__t .gap2,.rm__t th.gap2{display:none}.seg button{padding:7px 11px}}
+
+/* dva sloupce na PC: čas na RZ vlevo, celkově po RZ vpravo */
+.rm--dual .rm__panel{width:min(1540px,100%)}
+.rm__cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+.rm__coltitle{position:sticky;top:0;z-index:2;background:var(--ink2);padding:14px 0 10px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin:0}
+.rm:not(.rm--dual) .rm__coltitle{display:none}
+.rm--dual .rm__t th{top:42px}
+.rm__t .sub{display:block;font-style:normal;font-size:.7rem;color:#8ea0ba;font-weight:400}
+.rm--dual .rm__t td{padding:7px 8px}
+.rm--dual .rm__t .who{white-space:normal;line-height:1.25}
+.rm__t .ch{width:42px;font-size:.68rem;font-weight:800;text-align:center;padding-inline:2px}
+.rm__t .up{color:#4cd48a}.rm__t .dn{color:#ff6b8b}
+.rm--dual .rm__scroll{overflow:visible}

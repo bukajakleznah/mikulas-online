@@ -136,10 +136,10 @@ window.MRO = {
   // --- síň slávy: výsledky se generují z data/raw/<rok>.csv skriptem tools/build_results.py ---
   hall: [
     { year: 2025, img: "img/foto-4.jpg" },
-    { year: 2024, img: "img/foto-1.jpg" },
+    { year: 2024, img: "img/hall-2024.jpg" },
     { year: 2023, cancelled: true },
     { year: 2022, img: "img/foto-3.jpg" },
     { year: 2021, img: "img/foto-6.jpg" },
-    { year: 2020, img: "img/foto-2.jpg", note: "Premiéra – HOTHESS Mikuláš Rally Online 2020, závěrečný podnik MMČR v Online Rally." }
+    { year: 2020, img: "img/hall-2020.jpg", note: "Premiéra – HOTHESS Mikuláš Rally Online 2020, závěrečný podnik MMČR v Online Rally." }
   ]
 };

@@ -153,11 +153,14 @@
     var b = e.target.closest('[data-results]'); if (b) openResults(b.getAttribute('data-results'));
   });
 
-  // média – články
+  // média – články (v původním znění)
   $('#articles').innerHTML = D.media.map(function (m) {
-    return '<article class="art rv"><p class="art__meta">' + esc(m.date) + ' · ' + esc(m.source) + '</p><h4 class="art__t">' + esc(m.title) + '</h4>' +
-      m.text.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
-      '<p class="art__src">Zdroj: <a href="' + esc(m.url) + '" target="_blank" rel="noopener">' + esc(m.source) + '</a> (shrnutí vlastními slovy)</p></article>';
+    return '<details class="art rv"><summary><span class="art__meta">' + esc(m.date) + ' · ' + esc(m.source) + '</span><span class="art__t">' + esc(m.title) + '</span><span class="art__more">Číst celý článek</span></summary>' +
+      '<div class="art__body">' + m.text.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
+      (m.table ? '<h5 class="art__tt">' + esc(m.tableTitle) + '</h5><table class="art__tab"><tbody>' + m.table.map(function (r) {
+        return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td><td class="n">' + esc(r[3]) + '</td></tr>';
+      }).join('') + '</tbody></table>' : '') +
+      '<p class="art__src">Autor: ' + esc(m.author) + ' · Zdroj: <a href="' + esc(m.url) + '" target="_blank" rel="noopener">' + esc(m.source) + '</a></p></div></details>';
   }).join('');
 
   // YouTube – načte se až po kliknutí (rychlost + soukromí)
@@ -248,17 +251,25 @@
 
   // --- lightbox pro "Reálná podoba" ---
   var lb;
+  $$('[data-map]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (!lb) { initLb(); }
+      lb.querySelector('.lb__box').innerHTML = '<img src="' + b.getAttribute('data-map') + '" alt="Celková mapa tratí">';
+      lb.classList.add('is-open', 'lb--img');
+    });
+  });
+  var initLb = function () {
+    lb = document.createElement('div'); lb.className = 'lb'; lb.innerHTML = '<button class="lb__x" aria-label="Zavřít">×</button><div class="lb__box"></div>';
+    document.body.appendChild(lb);
+    var close = function () { lb.classList.remove('is-open', 'lb--img'); lb.querySelector('.lb__box').innerHTML = ''; };
+    lb.addEventListener('click', function (e) { if (e.target === lb || e.target.className === 'lb__x' || e.target.tagName === 'IMG') close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  };
   $$('[data-video]').forEach(function (b) {
     b.addEventListener('click', function () {
-      if (!lb) {
-        lb = document.createElement('div'); lb.className = 'lb'; lb.innerHTML = '<button class="lb__x" aria-label="Zavřít">×</button><div class="lb__box"></div>';
-        document.body.appendChild(lb);
-        var close = function () { lb.classList.remove('is-open'); lb.querySelector('.lb__box').innerHTML = ''; };
-        lb.addEventListener('click', function (e) { if (e.target === lb || e.target.className === 'lb__x') close(); });
-        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-      }
+      if (!lb) { initLb(); }
       lb.querySelector('.lb__box').innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-video') + '?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="Video"></iframe>';
-      lb.classList.add('is-open');
+      lb.classList.remove('lb--img'); lb.classList.add('is-open');
     });
   });
 })();

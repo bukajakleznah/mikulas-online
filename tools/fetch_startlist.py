@@ -13,13 +13,18 @@ import html
 import json
 import os
 import re
+import socket
+import ssl
 import sys
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 
+HOST = "rbr.onlineracing.cz"
 URL = "https://rbr.onlineracing.cz/tour/21e9722b6dbb5eb20e444f7561302cca/startlist"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "public/data/startlist.json")
+EXTRA_ROOTS = os.path.join(ROOT, "tools/certs/lets-encrypt-gen-y-roots.pem")  # nové kořeny LE, které nemusí být v systému
 
 
 def clean(s):
@@ -47,10 +52,47 @@ def parse(page):
     return crews
 
 
+def aia_intermediate_pem():
+    """rbr.onlineracing.cz posílá jen koncový certifikát bez zprostředkující CA (špatně nastavený server),
+    takže Python/OpenSSL ho neověří (prohlížeče si chybějící CA stáhnou samy). Tady ji dohledáme stejně:
+    z certifikátu vytáhneme adresu 'CA Issuers' (Let's Encrypt, *.lencr.org) a stáhneme ji.
+    Ověřování se nikdy nevypíná: zprostředkující CA musí vést ke kořenové CA (systémové, nebo z tools/certs)."""
+    probe = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    probe.check_hostname = False
+    probe.verify_mode = ssl.CERT_NONE  # jen přečteme certifikát, neposíláme nic citlivého
+    with socket.create_connection((HOST, 443), timeout=30) as sock:
+        with probe.wrap_socket(sock, server_hostname=HOST) as tls:  # SNI je nutné, jinak server vrátí jiný certifikát
+            der = tls.getpeercert(binary_form=True)
+    m = re.search(rb"http://[a-z0-9.\-]+\.lencr\.org/", der)
+    if not m:
+        raise RuntimeError("V certifikátu jsem nenašel adresu zprostředkující CA (AIA).")
+    with urllib.request.urlopen(m.group(0).decode(), timeout=30) as r:
+        inter = r.read()
+    return ssl.DER_cert_to_PEM_cert(inter) if not inter.startswith(b"-----BEGIN") else inter.decode()
+
+
+def download():
+    headers = {"User-Agent": "Mozilla/5.0 (mikulasrallyonline.cz startlist sync)"}
+    req = urllib.request.Request(URL, headers=headers)
+    ctx = None
+    if os.environ.get("STARTLIST_TEST_AIA"):  # jen pro test: začni bez důvěryhodných CA
+        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    try:
+        return urllib.request.urlopen(req, timeout=30, context=ctx).read().decode("utf-8", errors="replace")
+    except (ssl.SSLCertVerificationError, urllib.error.URLError) as e:
+        reason = getattr(e, "reason", e)
+        if not isinstance(reason, ssl.SSLCertVerificationError):
+            raise
+        print("Ověření certifikátu selhalo (%s) – zkouším doplnit chybějící zprostředkující CA." % reason)
+    ctx = ssl.create_default_context()
+    if os.path.exists(EXTRA_ROOTS):
+        ctx.load_verify_locations(cafile=EXTRA_ROOTS)
+    ctx.load_verify_locations(cadata=aia_intermediate_pem())
+    return urllib.request.urlopen(req, timeout=30, context=ctx).read().decode("utf-8", errors="replace")
+
+
 def main():
-    req = urllib.request.Request(URL, headers={"User-Agent": "Mozilla/5.0 (mikulasrallyonline.cz startlist sync)"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        page = r.read().decode("utf-8", errors="replace")
+    page = download()
     crews = parse(page)
     if not crews:
         print("Startovní listina je prázdná nebo se nepodařilo zpracovat stránku – ponechávám původní soubor.")

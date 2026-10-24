@@ -343,3 +343,29 @@ a.foot__logo:hover{opacity:1;transform:translateY(-3px)}
 .nw{white-space:nowrap}
 
 .hero__lead .ln{display:block}
+
+.doc--multi{flex-wrap:wrap}
+.doc--multi b{font-weight:600}
+.doc__btns{display:flex;flex-wrap:wrap;gap:8px}
+.doc__btns a{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--pink);font-weight:800;text-decoration:none;border:1.5px solid var(--pink);border-radius:999px;padding:6px 14px;transition:.15s}
+.doc__btns a:hover{background:var(--pink);color:#fff}
+
+/* startovní listina */
+.sl__n{color:var(--pink)}
+.sl__meta{font-size:.85rem;color:var(--muted);margin:-8px 0 22px}
+.sl__ctl{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin-bottom:18px}
+.sl__ctl .seg button{background:#fff;color:var(--text);border:1px solid var(--line)}
+.sl__ctl .seg button:hover{border-color:var(--pink)}
+.sl__ctl .seg button.is-on{background:var(--pink);border-color:var(--pink);color:#fff}
+.sl__q{background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 16px;font:600 .85rem 'Montserrat',sans-serif;min-width:240px;color:var(--text)}
+.sl__scroll{overflow-x:auto;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(11,16,32,.06)}
+.sl__t{width:100%;border-collapse:collapse;font-size:.9rem}
+.sl__t th{text-align:left;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:14px 14px 10px;border-bottom:2px solid var(--line);white-space:nowrap}
+.sl__t td{padding:10px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+.sl__t tbody tr:last-child td{border-bottom:0}
+.sl__t .pos{color:var(--muted);font-weight:800;width:44px}
+.sl__t .car,.sl__t .team{color:var(--muted)}
+.sl__t .cl{font-weight:800;font-size:.8rem}
+.sl__t .cc{font-size:.65rem;font-weight:800;letter-spacing:.06em;background:var(--paper);color:var(--muted);border-radius:5px;padding:2px 5px;margin-left:4px}
+.sl__empty{text-align:center;color:var(--muted);padding:26px}
+@media (max-width:620px){.sl__t .car,.sl__t th.car,.sl__t .team,.sl__t th.team{display:none}.sl__q{min-width:0;width:100%}}

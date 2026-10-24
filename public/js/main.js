@@ -14,9 +14,16 @@
 
   // dokumenty
   $('#docs').innerHTML = D.docs.map(function (d) {
-    return d.url
-      ? '<a class="doc" href="' + esc(d.url) + '" target="_blank" rel="noopener">' + esc(d.title) + '<span>PDF ↓</span></a>'
-      : '<div class="doc is-off">' + esc(d.title) + '<span>Připravujeme</span></div>';
+    var f = d.files || [];
+    var arrow = function (x) { return x.download ? ' ↓' : ' →'; };
+    var attrs = function (x) { return x.local ? '' : ' target="_blank" rel="noopener"' + (x.download ? ' download' : ''); };
+    if (!f.length) return '<div class="doc is-off">' + esc(d.title) + '<span>Připravujeme</span></div>';
+    if (f.length === 1) {
+      return '<a class="doc" href="' + esc(f[0].url) + '"' + attrs(f[0]) + '>' + esc(d.title) + '<span>' + esc(f[0].label) + arrow(f[0]) + '</span></a>';
+    }
+    return '<div class="doc doc--multi"><b>' + esc(d.title) + '</b><span class="doc__btns">' + f.map(function (x) {
+      return '<a href="' + esc(x.url) + '"' + attrs(x) + '>' + esc(x.label) + arrow(x) + '</a>';
+    }).join('') + '</span></div>';
   }).join('');
 
   // timeline
@@ -162,6 +169,36 @@
       }).join('') + '</tbody></table>' : '') +
       '<p class="art__src">Autor: ' + esc(m.author) + ' · Zdroj: <a href="' + esc(m.url) + '" target="_blank" rel="noopener">' + esc(m.source) + '</a></p></div></details>';
   }).join('');
+
+  // startovní listina (data/startlist.json aktualizuje denně GitHub Actions)
+  var sl = $('#startlist');
+  if (sl) {
+    fetch('data/startlist.json').then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (S) {
+      var crews = S.crews || [];
+      var upd = S.updated ? new Date(S.updated).toLocaleDateString('cs-CZ', { day: 'numeric', month: 'numeric', year: 'numeric' }) : '';
+      $('#slCount').textContent = crews.length;
+      $('#slUpd').textContent = upd ? 'Aktualizováno ' + upd : '';
+      var classes = []; crews.forEach(function (c) { if (c.cl && classes.indexOf(c.cl) < 0) classes.push(c.cl); });
+      var order = ['RC1', 'RC2', 'RGT', 'RC3', 'RC4', 'RC5', 'WRC', 'H/B', 'H/A', 'H/4', 'H/2'];
+      classes.sort(function (a, b) { var x = order.indexOf(a), y = order.indexOf(b); return (x < 0 ? 99 : x) - (y < 0 ? 99 : y); });
+      var st = { cls: '', q: '' };
+      var draw = function () {
+        var rows = crews.map(function (c, i) { return { c: c, i: i + 1 }; }).filter(function (r) {
+          return (!st.cls || r.c.cl === st.cls) && (!st.q || (r.c.n + ' ' + r.c.car + ' ' + r.c.team).toLowerCase().indexOf(st.q) >= 0);
+        });
+        $('#slBody').innerHTML = rows.length ? rows.map(function (r) {
+          return '<tr><td class="pos">' + r.i + '</td><td class="who"><b>' + esc(r.c.n) + '</b> <span class="cc">' + esc(r.c.cc) + '</span></td><td class="car">' + esc(r.c.car) + '</td><td class="cl">' + esc(r.c.cl) + '</td><td class="team">' + esc(r.c.team) + '</td></tr>';
+        }).join('') : '<tr><td colspan="5" class="sl__empty">Nic nenalezeno.</td></tr>';
+        $$('#slCls button').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-cls') === st.cls); });
+      };
+      if (classes.length > 1) {
+        $('#slCls').innerHTML = '<button type="button" data-cls="" class="is-on">Vše</button>' + classes.map(function (c) { return '<button type="button" data-cls="' + esc(c) + '">' + esc(c) + '</button>'; }).join('');
+        $('#slCls').addEventListener('click', function (e) { var b = e.target.closest('[data-cls]'); if (b) { st.cls = b.getAttribute('data-cls'); draw(); } });
+      }
+      $('#slQ').addEventListener('input', function () { st.q = this.value.trim().toLowerCase(); draw(); });
+      if (crews.length) { sl.hidden = false; draw(); }
+    }).catch(function () {});
+  }
 
   // YouTube – načte se až po kliknutí (rychlost + soukromí)
   $$('[data-yt]').forEach(function (el) {

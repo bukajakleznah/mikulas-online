@@ -4,18 +4,20 @@ window.MRO = {
   year: 2026,
   // "soon" = registrace ještě nespuštěna, "open" = otevřená, "closed" = uzavřena
   status: "open",
-  registrationUrl: "https://rbr.onlineracing.cz/tour/cc96f38bbb105972d36e9e4a9c3c3466",
+  registrationUrl: "https://rbr.onlineracing.cz/tour/21e9722b6dbb5eb20e444f7561302cca",
   statusText: {
     soon: "Registrace bude brzy spuštěna. Sleduj tuto stránku.",
-    open: "6. ročník · 21.–27. 11. 2026",
+    open: "6. ročník · 23.–29. 11. 2026",
     closed: "Registrace je uzavřena."
   },
 
   // --- PDF u aktuálního ročníku: nahrát do public/docs/ a doplnit url, např. "docs/zu-2026.pdf" ---
   docs: [
-    { title: "Zvláštní ustanovení", url: "" },
-    { title: "Harmonogram", url: "" },
-    { title: "Povinné textury", url: "" }
+    { title: "Zvláštní ustanovení", files: [{ label: "Zobrazit PDF", url: "docs/zvlastni-ustanoveni-2026.pdf" }] },
+    { title: "Harmonogram", files: [{ label: "Zobrazit PDF", url: "docs/casovy-harmonogram-2026.pdf" }] },
+    { title: "Startovní čísla (Plates)", files: [{ label: "AI (vektory)", url: "docs/startovni-cisla-2026.ai", download: true }, { label: "PSD", url: "docs/startovni-cisla-2026.psd", download: true }] },
+    { title: "Startovní listina", files: [{ label: "Zobrazit", url: "#startlist", local: true }] },
+    { title: "Povinné textury", files: [] }
   ],
 
   // --- historie / timeline z roku 2020 ---

@@ -16,7 +16,7 @@ window.MRO = {
     { title: "Zvláštní ustanovení", files: [{ label: "Zobrazit PDF", url: "docs/zvlastni-ustanoveni-2026.pdf" }] },
     { title: "Harmonogram", files: [{ label: "Zobrazit PDF", url: "docs/casovy-harmonogram-2026.pdf" }] },
     { title: "Startovní čísla (Plates)", files: [{ label: "AI (vektory)", url: "docs/startovni-cisla-2026.ai", download: true }, { label: "PSD", url: "docs/startovni-cisla-2026.psd", download: true }] },
-    { title: "Startovní listina", files: [{ label: "Zobrazit", url: "#startlist", local: true }] },
+    { title: "Startovní listina", files: [] },
     { title: "Povinné textury", files: [] }
   ],
 
